@@ -9,6 +9,7 @@ const logo = `______ _____ ___________ _____ _____ _________________
                    The best in life
 `;
 
+const path = require('path');
 const Discord = require('discord.js');
 const vorpal = require('vorpal')();
 const spinner = require('ora')('Loading...').start();
@@ -17,6 +18,9 @@ const hexToRgb = require('./util/hexToRgb');
 const chalk = vorpal.chalk;
 const colors = require('ansi-256-colors');
 const emoji = require('node-emoji');
+const LocalStorage = require('node-localstorage').LocalStorage;
+
+const localStorage = new LocalStorage(path.join(__dirname, 'cache'));
 
 const lp = (v, n, c = '0') => String(v).length >= n ? `${v}` : (String(c).repeat(n) + v).slice(-n);
 
@@ -98,10 +102,10 @@ vorpal.command('/exit', 'exit').action(() => {
 
 vorpal.command('/login <token>')
   .action((args, cb) => {
-    vorpal.localStorage.setItem('token', args.token);
+    localStorage.setItem('token', args.token);
     vorpal.log(chalk.bold('Token saved, use /logout to log out, or /exit to exit'));
     client.login(args.token).then(() => cb()).catch(() => {
-      vorpal.localStorage.removeItem('token');
+      localStorage.removeItem('token');
       vorpal.log(chalk.bold('INVALID TOKEN!'));
       client.destroy();
       process.exit();
@@ -110,7 +114,7 @@ vorpal.command('/login <token>')
 
 vorpal.command('/logout')
   .action((args, cb) => {
-    vorpal.localStorage.removeItem('token');
+    localStorage.removeItem('token');
     client.destroy();
     process.exit();
     return cb();
@@ -125,7 +129,7 @@ client.once('ready', () => {
   spinner.stop();
   if (client.user.bot) {
     vorpal.log(chalk.yellow.bold('NO BOTS'));
-    vorpal.localStorage.removeItem('token');
+    localStorage.removeItem('token');
     client.destroy();
     process.exit();
   }
@@ -134,16 +138,15 @@ client.once('ready', () => {
   vorpal.delimiter('>').show();
 });
 
-vorpal.localStorage('retrocord');
 vorpal.history('retrocord');
-let token = vorpal.localStorage.getItem('token');
+let token = localStorage.getItem('token');
 if (!token) {
   spinner.stop();
   vorpal.delimiter('>').show();
   vorpal.log(chalk.bold('You are not logged in, please use the login command!'));
 } else {
   client.login(token).catch(() => {
-    vorpal.localStorage.removeItem('token');
+    localStorage.removeItem('token');
     vorpal.log(chalk.bold('INVALID TOKEN!'));
     client.destroy();
     process.exit();
