@@ -18,11 +18,13 @@ const chalk = vorpal.chalk;
 const colors = require('ansi-256-colors');
 const emoji = require('node-emoji');
 
-const timestamp = vorpal.timestamp = (d = new Date(), mdy = false) =>
-  `${mdy ? `${d.getFullYear().toString().padStart(2, '0')}-${d.getMonth().toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ` : ''}
-${d.getHours().toString().padStart(2, '0')}:
-${d.getMinutes().toString().padStart(2, '0')}:
-${d.getSeconds().toString().padStart(2, '0')}
+const lp = (v, n, c = '0') => String(v).length >= n ? `${v}` : (String(c).repeat(n) + v).slice(-n);
+
+const timestamp = (d = new Date(), mdy = false) =>
+  `${mdy ? `${lp(d.getFullYear().toString(), 2)}-${lp((d.getMonth() + 1).toString(), 2)}-${lp(d.getDate().toString(), 2)} ` : ''}
+${lp(d.getHours().toString(), 2)}:
+${lp(d.getMinutes().toString(), 2)}:
+${lp(d.getSeconds().toString(), 2)}
 `.replace(/\n/g, '');
 
 const logMessage = vorpal.logMessage = (message) => {
