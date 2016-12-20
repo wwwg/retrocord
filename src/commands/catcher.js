@@ -3,7 +3,7 @@ const emoji = require('node-emoji');
 module.exports = (vorpal) => {
   const { discord, chalk } = vorpal;
   vorpal.catch('[words...]', 'send a message')
-    .autocomplete([
+    .autocomplete(() => [
       ...vorpal.current.guild ? discord.guilds.get(vorpal.current.guild).emojis.map(x => `:${x.name}:`) : [],
       ...Object.keys(emoji.emoji).map(x => `:${x}:`),
     ])
