@@ -93,6 +93,7 @@ for (const command of [
   'search',
   'shrug',
   'catcher',
+  'game',
 ]) require(`./commands/${command}`)(vorpal);
 
 vorpal.command('/exit', 'exit').action(() => {
