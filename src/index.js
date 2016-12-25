@@ -10,6 +10,7 @@ const logo = `______ _____ ___________ _____ _____ _________________
 `;
 
 const path = require('path');
+const superagent = require('superagent');
 const Discord = require('discord.js');
 const vorpal = require('vorpal')();
 const spinner = require('ora')('Loading...').start();
@@ -134,9 +135,18 @@ client.once('ready', () => {
     client.destroy();
     process.exit();
   }
-  console.log(center(logo));
-  console.log(center(`Connected as ${client.user.username}#${client.user.discriminator}`));
-  vorpal.delimiter('>').show();
+  superagent.get('https://discordapp.com/api/users/@me/billing/premium-subscription')
+  .set('Authorization', client.token).end((err, res) => {
+    console.log(center(logo));
+    let nitro = false
+    if (err || res.body.code || res.body.status !== 1) {
+      nitro = false;
+    } else {
+      nitro = true;
+    }
+    console.log(center(`Connected as ${client.user.username}#${client.user.discriminator} ${nitro ? '(with Discord Nitro!)' : ''}`));
+    vorpal.delimiter('>').show();
+  });
 });
 
 vorpal.history('retrocord');
