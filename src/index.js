@@ -124,6 +124,7 @@ vorpal.command('/logout')
 
 client.on('message', message => {
   if (message.channel.id !== vorpal.current.channel) return;
+  if (client.user.blocked.has(message.author.id)) return;
   logMessage(message);
 });
 
