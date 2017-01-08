@@ -136,18 +136,9 @@ client.once('ready', () => {
     client.destroy();
     process.exit();
   }
-  superagent.get('https://discordapp.com/api/users/@me/billing/premium-subscription')
-  .set('Authorization', client.token).end((err, res) => {
-    console.log(center(logo));
-    let nitro = false
-    if (err || res.body.code || res.body.status !== 1) {
-      nitro = false;
-    } else {
-      nitro = true;
-    }
-    console.log(center(`Connected as ${client.user.username}#${client.user.discriminator} ${nitro ? '(with Discord Nitro!)' : ''}`));
-    vorpal.delimiter('>').show();
-  });
+  console.log(center(logo));
+  console.log(center(`Connected as ${client.user.username}#${client.user.discriminator} ${client.user.premium ? '(with Discord Nitro!)' : ''}`));
+  vorpal.delimiter('>').show();
 });
 
 vorpal.history('retrocord');
