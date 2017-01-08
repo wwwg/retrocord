@@ -70,7 +70,7 @@ const logMessage = vorpal.logMessage = (message) => {
       case 'CHANNEL_ICON_CHANGE':
         break;
       case 'PINS_ADD':
-        vorpal.log(`${chalk.yellow(timestamp(message.createdAt))} ${color(name, message.author.discriminator)} ${chalk.bold('pinned a message!')}`);
+        vorpal.log(`${chalk.yellow(timestamp(message.createdAt))} ${color(`${name}#${message.author.discriminator}`)} ${chalk.bold('pinned a message!')}`);
         break;
       default:
         break;
