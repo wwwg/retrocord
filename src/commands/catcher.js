@@ -19,7 +19,6 @@ module.exports = (vorpal) => {
               if (discrim && u.discriminator !== discrim) match = false;
               return match;
             });
-            // let user = discord.users.find(x => x.username.toLowerCase() === args.words[word].replace('@', '').toLowerCase());
             if (user) args.words[word] = user.toString();
           }
         }

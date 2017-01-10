@@ -10,7 +10,6 @@ const logo = `______ _____ ___________ _____ _____ _________________
 `;
 
 const path = require('path');
-const superagent = require('superagent');
 const Discord = require('discord.js');
 const vorpal = require('vorpal')();
 const spinner = require('ora')('Loading...').start();
@@ -137,7 +136,8 @@ client.once('ready', () => {
     process.exit();
   }
   console.log(center(logo));
-  console.log(center(`Connected as ${client.user.username}#${client.user.discriminator} ${client.user.premium ? '(with Discord Nitro!)' : ''}`));
+  console.log(center(`Connected as ${client.user.username}#${client.user.discriminator}`));
+  if (client.user.premium) console.log(center(' 🎉  with Discord Nitro! 🎉'));
   vorpal.delimiter('>').show();
 });
 
