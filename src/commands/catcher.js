@@ -12,10 +12,10 @@ module.exports = (vorpal) => {
         args.words = args.words.map(w => w.toString());
         for (let word in args.words) {
           if (args.words[word].startsWith('@')) {
-            const [username, discrim] = args.words[word].split('#').map(x => x.replace('@', ''));
+            const [username, discrim] = args.words[word].split('#').map(x => x.replace('@', '').toLowerCase());
             let user = discord.users.find(u => {
               let match = false;
-              if (u.username === username) match = true;
+              if (u.username.replace(' ', '').toLowerCase() === username) match = true;
               if (discrim && u.discriminator !== discrim) match = false;
               return match;
             });
