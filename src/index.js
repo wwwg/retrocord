@@ -138,6 +138,7 @@ client.once('ready', () => {
   console.log(center(logo));
   console.log(center(`Connected as ${client.user.username}#${client.user.discriminator}`));
   if (client.user.premium) console.log(center(' 🎉  with Discord Nitro! 🎉'));
+  console.log('\n');
   vorpal.delimiter('>').show();
 });
 
