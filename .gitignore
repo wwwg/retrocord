@@ -2,3 +2,4 @@ node_modules/**
 src/cache/**
 build/**
 tmp/**
+nom-debug.log

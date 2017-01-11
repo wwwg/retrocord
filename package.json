@@ -4,7 +4,7 @@
   "description": "The best in life",
   "main": "src/index.js",
   "bin": {
-    "retrocord": "node ./node_modules/nexe/bin/nexe -i ./src/index.js -o ./build/retrocord"
+    "retrocord": "src/index.js"
   },
   "scripts": {
     "nexe": "node ./node_modules/nexe/bin/nexe -i ./src/index.js -o ./build/retrocord"
