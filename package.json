@@ -7,7 +7,7 @@
     "retrocord": "src/index.js"
   },
   "scripts": {
-    "nexe": "node ./node_modules/nexe/bin/nexe -i ./src/index.js -o ./build/retrocord"
+    "nexe": "node ./node_modules/nexe/bin/nexe"
   },
   "dependencies": {
     "ansi-256-colors": "^1.1.0",
@@ -36,5 +36,21 @@
   "bugs": {
     "url": "https://github.com/GusCaplan/retrocord/issues"
   },
-  "homepage": "https://github.com/GusCaplan/retrocord#readme"
+  "homepage": "https://github.com/GusCaplan/retrocord#readme",
+  "nexe": {
+    "input": "./src/index.js",
+    "output": "./build/retrocord^$",
+    "temp": "tmp",
+    "browserify": {
+      "requires": [],
+      "excludes": [],
+      "paths": []
+    },
+    "runtime": {
+      "framework": "node",
+      "version": "latest",
+      "js-flags": "--use_strict",
+      "ignoreFlags": true
+    }
+  }
 }
