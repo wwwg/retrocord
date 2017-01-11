@@ -104,15 +104,13 @@ username().then(uname => {
   vorpal.find('help').remove();
   vorpal.find('exit').remove();
 
-  for (const command of [
-    'help',
-    'join',
-    'nick',
-    'search',
-    'shrug',
-    'catcher',
-    'game',
-  ]) require(`./commands/${command}`)(vorpal);
+  require('./commands/help')(vorpal);
+  require('./commands/join')(vorpal);
+  require('./commands/nick')(vorpal);
+  require('./commands/search')(vorpal);
+  require('./commands/shrug')(vorpal);
+  require('./commands/catcher')(vorpal);
+  require('./commands/game')(vorpal);
 
   vorpal.command('/exit', 'exit').action(() => {
     vorpal.log('bye!');
