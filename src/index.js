@@ -85,7 +85,7 @@ const client = vorpal.discord = new Discord.Client();
 username().then(uname => {
   const OS_STORAGE_PATHS = {
     linux: '/home/{user}/.retrocord',
-    win32: 'C:\\Users\\{user}\\AppData\\Local\\retrocord',
+    win32: 'C:\\Users\\{user}\\AppData\\Roaming\\retrocord',
     darwin: '/Users/{user}/Library/Application Support/retrocord',
   };
 
