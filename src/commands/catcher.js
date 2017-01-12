@@ -1,13 +1,19 @@
 const emoji = require('node-emoji');
+const fetchEmojis = require('../util/fetchEmojis');
 
 module.exports = (vorpal) => {
   const { discord, chalk } = vorpal;
   vorpal.catch('[words...]', 'send a message')
-    .autocomplete(() => [
-      ...vorpal.current.guild ? discord.guilds.get(vorpal.current.guild).emojis.map(x => `:${x.name}:`) : [],
-      ...Object.keys(emoji.emoji).map(x => `:${x}:`),
-    ])
+    .autocomplete(() => {
+      const emojis = fetchEmojis(vorpal);
+      return [
+        ...emojis.map(x => `:${x.name}:`),
+        ...Object.keys(emoji.emoji).map(x => `:${x}:`),
+      ];
+    })
     .action((args, cb) => {
+      const emojis = fetchEmojis(vorpal);
+
       if (vorpal.current.channel) {
         args.words = args.words.map(w => w.toString());
         for (let word in args.words) {
@@ -25,10 +31,7 @@ module.exports = (vorpal) => {
 
         let words = args.words.join(' ');
         for (const match of words.match(/:[^:]+:/g) || []) {
-          let found;
-          if (vorpal.current.guild) {
-            found = discord.guilds.get(vorpal.current.guild).emojis.find(x => x.name.toLowerCase() === match.replace(/:/g, '').toLowerCase());
-          }
+          let found = emojis.find(x => x.name.toLowerCase() === match.replace(/:/g, '').toLowerCase());
           words = words.replace(match, found ? found.toString() : null || emoji.get(match));
         }
 
