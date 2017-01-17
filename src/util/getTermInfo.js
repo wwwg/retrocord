@@ -8,9 +8,16 @@ function properPath(program) {
 }
 
 function getTerm() {
-  const neofetch = cp.execSync(properPath('neofetch')).toString().trim();
-  const screenfetch = cp.execSync(properPath('screenfetch')).toString().trim();
-  const final = `${neofetch}\n${screenfetch}`.replace(ANSI_REGEX, '');
+  let neofetch;
+  let screenfetch;
+  let final;
+  try {
+    neofetch = cp.execSync(properPath('neofetch')).toString().trim();
+    screenfetch = cp.execSync(properPath('screenfetch')).toString().trim();
+    final = `${neofetch}\n${screenfetch}`.replace(ANSI_REGEX, '');
+  } catch (err) {
+    return {};
+  }
 
   function fetch(prop, which = final) {
     const regex = new RegExp(`${prop}: (.+[\\n\\r])`, 'gi');
