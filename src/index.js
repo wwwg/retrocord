@@ -20,7 +20,7 @@ const hexToRgb = require('./util/hexToRgb');
 const chalk = vorpal.chalk;
 const colors = require('ansi-256-colors');
 const emoji = require('node-emoji');
-const username = require('username');
+const username = require('./util/username');
 const LocalStorage = require('node-localstorage').LocalStorage;
 
 const lp = (v, n, c = '0') => String(v).length >= n ? `${v}` : (String(c).repeat(n) + v).slice(-n);
@@ -81,95 +81,97 @@ const logMessage = vorpal.logMessage = (message) => {
 };
 
 const client = vorpal.discord = new Discord.Client();
+const uname = username();
 
-username().then(uname => {
-  const OS_STORAGE_PATHS = {
-    linux: '/home/{user}/.retrocord',
-    win32: 'C:\\Users\\{user}\\AppData\\Roaming\\retrocord',
-    darwin: '/Users/{user}/Library/Application Support/retrocord',
-  };
+const OS_STORAGE_PATHS = {
+  linux: '/home/{user}/.retrocord',
+  win32: 'C:\\Users\\{user}\\AppData\\Roaming\\retrocord',
+  darwin: '/Users/{user}/Library/Application Support/retrocord',
+};
 
-  const OS_STORAGE_PATH = OS_STORAGE_PATHS[os.platform()].replace('{user}', uname);
+const OS_STORAGE_PATH = OS_STORAGE_PATHS[os.platform()].replace('{user}', uname);
 
-  if (!fs.existsSync(OS_STORAGE_PATH)) fs.mkdirSync(OS_STORAGE_PATH);
+if (!fs.existsSync(OS_STORAGE_PATH)) {
+  console.warn(`New storage cache in \`${OS_STORAGE_PATH}\``);
+  fs.mkdirSync(OS_STORAGE_PATH);
+}
 
-  const LOCALSTORAGE_PATH = path.join(OS_STORAGE_PATH, 'cache');
+const LOCALSTORAGE_PATH = path.join(OS_STORAGE_PATH, 'cache');
 
-  if (!fs.existsSync(LOCALSTORAGE_PATH)) fs.mkdirSync(LOCALSTORAGE_PATH);
+if (!fs.existsSync(LOCALSTORAGE_PATH)) fs.mkdirSync(LOCALSTORAGE_PATH);
 
-  const localStorage = new LocalStorage(LOCALSTORAGE_PATH);
+const localStorage = new LocalStorage(LOCALSTORAGE_PATH);
 
-  vorpal.current = {};
+vorpal.current = {};
 
-  vorpal.find('help').remove();
-  vorpal.find('exit').remove();
+vorpal.find('help').remove();
+vorpal.find('exit').remove();
 
-  require('./commands/help')(vorpal);
-  require('./commands/join')(vorpal);
-  require('./commands/nick')(vorpal);
-  require('./commands/search')(vorpal);
-  require('./commands/shrug')(vorpal);
-  require('./commands/catcher')(vorpal);
-  require('./commands/game')(vorpal);
+require('./commands/help')(vorpal);
+require('./commands/join')(vorpal);
+require('./commands/nick')(vorpal);
+require('./commands/search')(vorpal);
+require('./commands/shrug')(vorpal);
+require('./commands/catcher')(vorpal);
+require('./commands/game')(vorpal);
 
-  vorpal.command('/exit', 'exit').action(() => {
-    vorpal.log('bye!');
-    process.exit(0);
-  });
+vorpal.command('/exit', 'exit').action(() => {
+  vorpal.log('bye!');
+  process.exit(0);
+});
 
-  vorpal.command('/login <token>')
-    .action((args, cb) => {
-      localStorage.setItem('token', args.token);
-      vorpal.log(chalk.bold('Token saved, use /logout to log out, or /exit to exit'));
-      client.login(args.token).then(() => cb()).catch(() => {
-        localStorage.removeItem('token');
-        vorpal.log(chalk.bold('INVALID TOKEN!'));
-        client.destroy();
-        process.exit();
-      });
-    });
-
-  vorpal.command('/logout')
-    .action((args, cb) => {
-      localStorage.removeItem('token');
-      client.destroy();
-      process.exit();
-      return cb();
-    });
-
-  client.on('message', message => {
-    if (message.channel.id !== vorpal.current.channel) return;
-    if (client.user.blocked.has(message.author.id)) return;
-    logMessage(message);
-  });
-
-  client.once('ready', () => {
-    spinner.stop();
-    if (client.user.bot) {
-      vorpal.log(chalk.yellow.bold('NO BOTS'));
-      localStorage.removeItem('token');
-      client.destroy();
-      process.exit();
-    }
-    console.log(center(logo));
-    console.log(center(`Connected as ${client.user.username}#${client.user.discriminator}`));
-    if (client.user.premium) console.log(center(' 🎉  with Discord Nitro! 🎉'));
-    console.log('\n');
-    vorpal.delimiter('>').show();
-  });
-
-  vorpal.history('retrocord');
-  let token = localStorage.getItem('token');
-  if (!token) {
-    spinner.stop();
-    vorpal.delimiter('>').show();
-    vorpal.log(chalk.bold('You are not logged in, please use the login command!'));
-  } else {
-    client.login(token).catch(() => {
+vorpal.command('/login <token>')
+  .action((args, cb) => {
+    localStorage.setItem('token', args.token);
+    vorpal.log(chalk.bold('Token saved, use /logout to log out, or /exit to exit'));
+    client.login(args.token).then(() => cb()).catch(() => {
       localStorage.removeItem('token');
       vorpal.log(chalk.bold('INVALID TOKEN!'));
       client.destroy();
       process.exit();
     });
-  }
+  });
+
+vorpal.command('/logout')
+  .action((args, cb) => {
+    localStorage.removeItem('token');
+    client.destroy();
+    process.exit();
+    return cb();
+  });
+
+client.on('message', message => {
+  if (message.channel.id !== vorpal.current.channel) return;
+  if (client.user.blocked.has(message.author.id)) return;
+  logMessage(message);
 });
+
+client.once('ready', () => {
+  spinner.stop();
+  if (client.user.bot) {
+    vorpal.log(chalk.yellow.bold('NO BOTS'));
+    localStorage.removeItem('token');
+    client.destroy();
+    process.exit();
+  }
+  console.log(center(logo));
+  console.log(center(`Connected as ${client.user.username}#${client.user.discriminator}`));
+  if (client.user.premium) console.log(center(' 🎉  with Discord Nitro! 🎉'));
+  console.log('\n');
+  vorpal.delimiter('>').show();
+});
+
+vorpal.history('retrocord');
+let token = localStorage.getItem('token');
+if (!token) {
+  spinner.stop();
+  vorpal.delimiter('>').show();
+  vorpal.log(chalk.bold('You are not logged in, please use the login command!'));
+} else {
+  client.login(token).catch(() => {
+    localStorage.removeItem('token');
+    vorpal.log(chalk.bold('INVALID TOKEN!'));
+    client.destroy();
+    process.exit();
+  });
+}
