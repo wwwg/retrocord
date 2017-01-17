@@ -4,7 +4,7 @@ const cp = require('child_process');
 const ANSI_REGEX = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g;
 
 function properPath(program) {
-  return path.resolve(path.join(__dirname, `../vendor/${program}/${process.platform}`));
+  return path.resolve(path.join(__dirname, `../vendor/${program}`));
 }
 
 function getTerm() {
