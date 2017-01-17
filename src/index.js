@@ -22,6 +22,7 @@ const colors = require('ansi-256-colors');
 const emoji = require('node-emoji');
 const username = require('./util/username');
 const LocalStorage = require('node-localstorage').LocalStorage;
+const getTermInfo = require('./util/getTermInfo');
 
 const lp = (v, n, c = '0') => String(v).length >= n ? `${v}` : (String(c).repeat(n) + v).slice(-n);
 
@@ -82,6 +83,9 @@ const logMessage = vorpal.logMessage = (message) => {
 
 const client = vorpal.discord = new Discord.Client();
 const uname = username();
+const termInfo = getTermInfo();
+
+const DELIMITER = termInfo.font.toLowerCase().includes('nerd') ? '' : '>';
 
 const OS_STORAGE_PATHS = {
   linux: '/home/{user}/.retrocord',
@@ -158,14 +162,14 @@ client.once('ready', () => {
   console.log(center(`Connected as ${client.user.username}#${client.user.discriminator}`));
   if (client.user.premium) console.log(center(' 🎉  with Discord Nitro! 🎉'));
   console.log('\n');
-  vorpal.delimiter('>').show();
+  vorpal.delimiter(DELIMITER).show();
 });
 
 vorpal.history('retrocord');
 let token = localStorage.getItem('token');
 if (!token) {
   spinner.stop();
-  vorpal.delimiter('>').show();
+  vorpal.delimiter(DELIMITER).show();
   vorpal.log(chalk.bold('You are not logged in, please use the login command!'));
 } else {
   client.login(token).catch(() => {
