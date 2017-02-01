@@ -100,7 +100,7 @@ function getOSStoragePath() {
 const OS_STORAGE_PATH = getOSStoragePath();
 
 if (!fs.existsSync(OS_STORAGE_PATH)) {
-  console.warn(`New storage cache in \`${OS_STORAGE_PATH}\``);
+  console.warn(`\nNew storage cache in \`${OS_STORAGE_PATH}\``);
   fs.mkdirSync(OS_STORAGE_PATH);
 }
 
