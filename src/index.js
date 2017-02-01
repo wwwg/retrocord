@@ -91,7 +91,7 @@ function getOSStoragePath() {
     case 'win32':
       return `${process.env.APPDATA}\\retrocord`;
     case 'linux':
-      return `/var/local/retrocord`;
+      return `${process.env.HOME}/.retrocord`;
     default:
       return '.';
   }
