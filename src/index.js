@@ -10,7 +10,6 @@ const logo = `______ _____ ___________ _____ _____ _________________
 `;
 
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
 const Discord = require('discord.js');
 const vorpal = require('vorpal')();
@@ -20,7 +19,6 @@ const hexToRgb = require('./util/hexToRgb');
 const chalk = vorpal.chalk;
 const colors = require('ansi-256-colors');
 const emoji = require('node-emoji');
-const username = require('./util/username');
 const LocalStorage = require('node-localstorage').LocalStorage;
 const getTermInfo = require('./util/getTermInfo');
 
@@ -82,18 +80,24 @@ const logMessage = vorpal.logMessage = (message) => {
 };
 
 const client = vorpal.discord = new Discord.Client();
-const uname = username();
 const termInfo = getTermInfo();
 
 const DELIMITER = termInfo.font.toLowerCase().includes('nerd') ? '' : '>';
 
-const OS_STORAGE_PATHS = {
-  linux: '/home/{user}/.retrocord',
-  win32: 'C:\\Users\\{user}\\AppData\\Roaming\\retrocord',
-  darwin: '/Users/{user}/Library/Application Support/retrocord',
-};
+function getOSStoragePath() {
+  switch (process.platform) {
+    case 'darwin':
+      return `${process.env.HOME}/Library/Application Support/retrocord`;
+    case 'win32':
+      return `${process.env.APPDATA}\\retrocord`;
+    case 'linux':
+      return `/var/local/retrocord`;
+    default:
+      return '.';
+  }
+}
 
-const OS_STORAGE_PATH = OS_STORAGE_PATHS[os.platform()].replace('{user}', uname);
+const OS_STORAGE_PATH = getOSStoragePath();
 
 if (!fs.existsSync(OS_STORAGE_PATH)) {
   console.warn(`New storage cache in \`${OS_STORAGE_PATH}\``);
