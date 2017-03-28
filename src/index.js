@@ -77,6 +77,8 @@ const logMessage = vorpal.logMessage = (message) => {
   } else {
     vorpal.log(`${chalk.yellow(timestamp(message.createdAt))} ${color(`${name}#${message.author.discriminator}`)} ${content}`);
   }
+
+  if (message.author.id !== client.user.id) message.acknowledge();
 };
 
 const client = vorpal.discord = new Discord.Client();

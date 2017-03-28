@@ -4,7 +4,7 @@ module.exports = (vorpal) => {
     .autocomplete((text) => {
       const x = discord.guilds.map(g => g.name.toLowerCase());
       if (text.startsWith('dm')) {
-        x.push(...discord.channels.filter(c => c.type === 'dm' || c.type === 'group').map(c => `#${(c.name ? c.name : c.recipient.username).toLowerCase()}`));
+        x.push(...discord.channels.filter(c => c.type === 'dm' || c.type === 'group').map(c => `@${(c.name ? c.name : c.recipient.username).toLowerCase()}`));
       } else {
         x.push(...discord.channels.filter(c => c.type === 'text').map(c => `#${c.name.toLowerCase()}`));
       }
@@ -12,7 +12,8 @@ module.exports = (vorpal) => {
     })
     .action((args, cb) => {
       args = args['guild#channel'].join(' ');
-      let [guild, channel] = [args.split('#')[0].trim(), args.split('#')[1]];
+      const re = /@|#/;
+      let [guild, channel] = [args.split(re)[0].trim(), args.split(re)[1].trim()];
       if (guild !== 'dm') {
         guild = guild ? discord.guilds.find(g => g.name.toLowerCase() === guild.toLowerCase()) :
           discord.guilds.get(vorpal.current.guild);
@@ -28,7 +29,6 @@ module.exports = (vorpal) => {
         vorpal.log(chalk.bold(`Joining ${channel.name} in ${guild.name}`));
         vorpal.current = { channel: channel.id, guild: guild.id };
       } else {
-        if (!args.includes('#')) return cb(chalk.bold('INVALID!'));
         channel = discord.channels.filter(c => c.type === 'dm').find(c => c.recipient.username.toLowerCase() === channel.toLowerCase().trim());
         if (!channel) {
           vorpal.log(chalk.bold('Error: not a valid channel'));

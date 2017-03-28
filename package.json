@@ -1,6 +1,6 @@
 {
   "name": "retrocord",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "The best in life",
   "main": "src/index.js",
   "bin": {
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "ansi-256-colors": "^1.1.0",
-    "discord.js": "github:hydrabolt/discord.js#master",
+    "discord.js": "github:hydrabolt/discord.js",
     "inquirer": "^2.0.0",
     "node-emoji": "^1.4.3",
     "ora": "^1.0.0",
