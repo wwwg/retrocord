@@ -47,9 +47,7 @@ const logMessage = vorpal.logMessage = (message) => {
 
   if (message.member) {
     color = (...x) => {
-      const role = message.member.roles.filter(r => r.color !== 0).last();
-      if (!role) return colors.fg.getRgb(5, 5, 5) + x.join(' ') + colors.reset;
-      const c = hexToRgb(role.hexColor);
+      const c = hexToRgb(message.member.displayHexColor);
       return colors.fg.getRgb(c.r, c.g, c.b) + x.join(' ') + colors.reset;
     };
   }
