@@ -185,3 +185,5 @@ if (!token) {
     process.exit();
   });
 }
+
+process.on('unhandledRejection', () => {}); // eslint-disable-line no-empty-function
