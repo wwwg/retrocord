@@ -27,16 +27,16 @@
     "opusscript": "0.0.2",
     "utf-8-validate": "^2.0.0"
   },
-  "author": "Gus Caplan <me@gus.host>",
+  "author": "snek <me@gus.host>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GusCaplan/retrocord.git"
+    "url": "git+https://github.com/devsnek/retrocord.git"
   },
   "bugs": {
-    "url": "https://github.com/GusCaplan/retrocord/issues"
+    "url": "https://github.com/devsnek/retrocord/issues"
   },
-  "homepage": "https://github.com/GusCaplan/retrocord#readme",
+  "homepage": "https://github.com/devsnek/retrocord#readme",
   "nexe": {
     "input": "./src/index.js",
     "output": "./build/retrocord^$",
