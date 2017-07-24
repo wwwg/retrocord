@@ -1,5 +1,6 @@
 const EventEmitter = require('events');
 const blessed = require('blessed');
+const format = require('./util/format');
 
 class GUI extends EventEmitter {
   constructor(screen) {
@@ -49,8 +50,11 @@ class GUI extends EventEmitter {
     this.inputbox.focus();
   }
 
-  put(text) {
-    this.consolebox.log(text);
+  put(text, options = {}) {
+    this.consolebox.log(format(text, {
+      width: this.consolebox.width,
+      center: options.center,
+    }));
   }
 }
 
