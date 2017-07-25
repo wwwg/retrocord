@@ -1,5 +1,4 @@
 const Storage = require('./Storage');
-const messageElement = require('./elements/message');
 
 module.exports = {
   q: {
@@ -42,9 +41,8 @@ module.exports = {
       } else {
         ctx.gui.put(`{bold}Joining #${channel.name} in ${scope.name}{/bold}`);
       }
-      channel.fetchMessages({ limit: 5 }).then(async(messages) => {
-        messages = await Promise.all(messages.map((m) => messageElement(m)));
-        for (const message of messages.reverse()) ctx.gui.put(message);
+      channel.fetchMessages({ limit: 5 }).then((messages) => {
+        ctx.gui.putMessages(messages.array().reverse());
       });
       ctx.current.channel = channel;
       ctx.current.scope = scope;
@@ -67,11 +65,10 @@ module.exports = {
         .then((r) => r.results.map((msgs) => msgs.find((m) => m.hit)))
         .then(async(messages) => {
           ctx.gui.put('{bold}-- BEGIN SEARCH --{/bold}');
-          const results = await (Promise.all(messages).map((r) => messageElement(r, true)))
+          const results = messages
             .slice(0, 10)
-            .reverse()
-            .join('\n');
-          ctx.gui.put(results, { format: false });
+            .reverse();
+          await ctx.gui.putMessages(results, { mdy: true });
           ctx.gui.put('{bold}--- END SEARCH ---{/bold}');
         });
     },

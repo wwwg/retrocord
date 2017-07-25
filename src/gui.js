@@ -1,5 +1,6 @@
 const EventEmitter = require('events');
 const blessed = require('blessed');
+const messageElement = require('./elements/message');
 
 class GUI extends EventEmitter {
   constructor(screen) {
@@ -50,6 +51,15 @@ class GUI extends EventEmitter {
 
   put(text) {
     this.consolebox.log(text);
+  }
+
+  async putMessages(messages, { mdy = false } = {}) {
+    messages = await Promise.all(messages.map((m) => messageElement(m, mdy)));
+    for (const message of messages) this.consolebox.log(message);
+  }
+
+  putMessage(message, opt) {
+    return this.putMessages([message], opt);
   }
 }
 
