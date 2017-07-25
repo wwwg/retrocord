@@ -16,7 +16,7 @@ module.exports = {
     run: (ctx) => {
       Storage.delete('token');
       ctx.discord.ws.destroy();
-      ctx.gui.put('{red+bold}Logged Out!{/}');
+      ctx.gui.put('{bold}Logged Out!{/bold}');
     },
   },
   join: {
@@ -31,16 +31,16 @@ module.exports = {
         scope = scope ?
           ctx.discord.guilds.find((g) => g.name.toLowerCase() === scope.toLowerCase()) :
           ctx.current.scope;
-        if (!scope) return ctx.gui.put('{red}Invalid Guild{/}');
+        if (!scope) return ctx.gui.put('{bold}Invalid Guild{/bold}');
         channel = scope.channels
           .filter((c) => c.type === 'text')
           .find((c) => c.name.toLowerCase() === channel.toLowerCase());
       }
-      if (!channel) return ctx.gui.put('{red}Invalid Channel{/}');
+      if (!channel) return ctx.gui.put('{bold}Invalid Channel{/bold}');
       if (channel.recipient) {
-        ctx.gui.put(`{bold}Joining DM with ${channel.recipient.tag}{/}`);
+        ctx.gui.put(`{bold}Joining DM with ${channel.recipient.tag}{/bold}`);
       } else {
-        ctx.gui.put(`{bold}Joining #${channel.name} in ${scope.name}{/}`);
+        ctx.gui.put(`{bold}Joining #${channel.name} in ${scope.name}{/bold}`);
       }
       channel.fetchMessages({ limit: 5 }).then((messages) => {
         for (const message of messages.array().reverse()) ctx.gui.put(messageElement(message), { format: false });
@@ -53,11 +53,11 @@ module.exports = {
     aliases: ['nickname'],
     run: (ctx, args) => {
       if (!ctx.current.scope || ctx.current.scope === 'dm') {
-        return ctx.gui.put('{bold}You must be in a guild to set your nickname{/}');
+        return ctx.gui.put('{bold}You must be in a guild to set your nickname{/bold}');
       }
       ctx.current.scope.member(ctx.discord.user).setNickname(args.join(' '))
-        .then(() => ctx.gui.put(`{bold}Nickname set to "${args.join(' ')}"{/}`))
-        .catch((err) => ctx.gui.put(`{bold}Unable to set nickname: ${err.message}{/}`));
+        .then(() => ctx.gui.put(`{bold}Nickname set to "${args.join(' ')}"{/bold}`))
+        .catch((err) => ctx.gui.put(`{bold}Unable to set nickname: ${err.message}{/bold}`));
     },
   },
   search: {
@@ -65,14 +65,14 @@ module.exports = {
       ctx.current.channel.search({ content: args.join(' ') })
         .then((r) => r.results.map((msgs) => msgs.find((m) => m.hit)))
         .then((messages) => {
-          ctx.gui.put('{bold}-- BEGIN SEARCH --{/}');
+          ctx.gui.put('{bold}-- BEGIN SEARCH --{/bold}');
           const results = messages
             .map((r) => messageElement(r, true))
             .slice(0, 10)
             .reverse()
             .join('\n');
           ctx.gui.put(results, { format: false });
-          ctx.gui.put('{bold}--- END SEARCH ---{/}');
+          ctx.gui.put('{bold}--- END SEARCH ---{/bold}');
         });
     },
   },

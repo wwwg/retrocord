@@ -8,7 +8,7 @@ const client = new Discord.Client({
 
 function run(ctx) {
   client.on('ready', () => {
-    ctx.gui.put(`Logged in as ${client.user.tag}`, { center: true });
+    ctx.gui.put(`{bold}Logged in as ${client.user.tag}{/bold}`, { center: true });
     ctx.allowInput = true;
   });
 
@@ -20,7 +20,7 @@ function run(ctx) {
   client.login(Storage.get('token'))
     .catch((err) => {
       Storage.delete('token');
-      ctx.gui.put(`{red+bold}Incorrect Token!{/} (${err.message})`);
+      ctx.gui.put(`{bold}Incorrect Token!{/bold} (${err.message})`);
     });
 }
 

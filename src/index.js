@@ -52,12 +52,12 @@ gui.on('input', (message) => {
 });
 
 gui.init();
-gui.put(assets.logo, { center: true });
+gui.put(`{center}${assets.logo}{/center}`, { center: true });
 
 if (Storage.has('token')) {
   discord.run(ctx);
 } else {
-  gui.put('{red+bold}Please Login!{/}', { center: true });
+  gui.put('{bold}Please Login!{/bold}', { center: true });
 }
 
 function getEmojis() {

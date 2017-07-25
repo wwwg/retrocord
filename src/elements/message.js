@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const emoji = require('node-emoji');
 const colors = require('ansi-256-colors');
 const timestamp = require('../util/timestamp');
@@ -30,5 +29,5 @@ module.exports = (message, mdy = false) => {
 
   for (const match of content.match(/:[^:]+:/g) || []) content = content.replace(match, emoji.get(match));
 
-  return `${chalk.yellow(timestamp(message.createdAt, mdy))} ${color(message.author.tag)} ${content}`;
+  return `{yellow-fg}${timestamp(message.createdAt, mdy)}{/yellow-fg} ${color(message.author.tag)} ${content}`;
 };
