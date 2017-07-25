@@ -9,7 +9,7 @@ const STORAGE_PATH = path.join(OS_STORAGE_PATH, 'storage.json');
 let cache = {};
 try {
   cache = JSON.parse(fs.readFileSync(STORAGE_PATH));
-} catch (err) {}
+} catch (err) {} // eslint-disable-line no-empty
 
 module.exports = {
   get(key) {
@@ -28,7 +28,7 @@ module.exports = {
     fs.writeFileSync(STORAGE_PATH, JSON.stringify(cache));
     return ret;
   },
-}
+};
 
 function getOSStoragePath() {
   switch (process.platform) {

@@ -10,7 +10,7 @@ class GUI extends EventEmitter {
       label: 'retrocord',
       width: '100%',
       height: '100%-1',
-      border: { type: 'line' }
+      border: { type: 'line' },
     });
 
     this.consolebox = blessed.log({
@@ -21,7 +21,7 @@ class GUI extends EventEmitter {
       alwaysScroll: true,
       scrollbar: {
         ch: '',
-        inverse: true
+        inverse: true,
       },
       mouse: true,
     });
@@ -50,17 +50,15 @@ class GUI extends EventEmitter {
     this.inputbox.focus();
   }
 
-  put(text, options = {}) {
-    this.consolebox.log(format(text, {
-      width: this.consolebox.width,
-      center: options.center,
-    }));
+  put(text, { format: formatText, center } = {}) {
+    if (formatText !== false) text = format(text, { center, width: this.consolebox.width });
+    this.consolebox.log(text);
   }
 }
 
 const screen = blessed.screen({
   smartCSR: true,
-  title: 'retrocord'
+  title: 'retrocord',
 });
 
 const gui = new GUI(screen);

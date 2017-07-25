@@ -13,15 +13,15 @@ function run(ctx) {
   });
 
   client.on('message', (message) => {
-    ctx.gui.put(message.content);
-    // ctx.gui.put(messageElement(message));
+    if (message.channel !== ctx.current.channel) return;
+    ctx.gui.put(messageElement(message), { format: false });
   });
 
   client.login(Storage.get('token'))
-  .catch((err) => {
-    Storage.delete('token');
-    ctx.gui.put(`{red+bold}Incorrect Token!{/} (${err.message})`);
-  });
+    .catch((err) => {
+      Storage.delete('token');
+      ctx.gui.put(`{red+bold}Incorrect Token!{/} (${err.message})`);
+    });
 }
 
 module.exports = { client, run };

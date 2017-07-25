@@ -1,18 +1,21 @@
+const chalk = require('chalk');
 const emoji = require('node-emoji');
 const colors = require('ansi-256-colors');
-const blessed = require('blessed');
 const timestamp = require('../util/timestamp');
 const hexToRgb = require('../util/hexToRgb');
 
-module.exports = (message) => {
+module.exports = (message, mdy = false) => {
+  const client = message.client;
   const color = (...x) => {
     if (message.member) {
-      const c = hexToRgb(message.member.displayHexColor);
+      let hex = message.member.displayHexColor;
+      if (hex === '#000000') hex = '#FFFFFF';
+      const c = hexToRgb(hex);
       return colors.fg.getRgb(c.r, c.g, c.b) + x.join(' ') + colors.reset;
     } else {
       return colors.fg.getRgb(5, 5, 5) + x.join(' ') + colors.reset;
     }
-  }
+  };
 
   let content = message.content;
 
@@ -27,7 +30,5 @@ module.exports = (message) => {
 
   for (const match of content.match(/:[^:]+:/g) || []) content = content.replace(match, emoji.get(match));
 
-  return blessed.text({
-    content: `{yellow}${timestamp(message.createdAt)}{/} ${color(message.author.tag)} ${content}`
-  });
-}
+  return `${chalk.yellow(timestamp(message.createdAt, mdy))} ${color(message.author.tag)} ${content}`;
+};
