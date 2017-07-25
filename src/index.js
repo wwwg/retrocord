@@ -1,9 +1,12 @@
+#!/usr/bin/env node
+
 const emoji = require('node-emoji');
 const Storage = require('./Storage');
 const gui = require('./gui');
 const commands = require('./commands');
 const assets = require('./assets');
 const discord = require('./discord');
+const snekparse = require('snekparse');
 
 const ctx = {
   gui, assets,
@@ -18,7 +21,7 @@ const ctx = {
 gui.on('input', (message) => {
   if (message.startsWith(':')) {
     const [command, ...args] = message.slice(1).split(' ');
-    if (command in commands) commands[command].run(ctx, args);
+    if (command in commands) commands[command].run(ctx, snekparse(args));
   } else {
     if (!ctx.allowInput) return;
     const args = message.split(' ');

@@ -14,7 +14,7 @@ function run(ctx) {
 
   client.on('message', (message) => {
     if (message.channel !== ctx.current.channel) return;
-    ctx.gui.put(messageElement(message), { format: false });
+    messageElement(message).then((f) => ctx.gui.put(f));
   });
 
   client.login(Storage.get('token'))

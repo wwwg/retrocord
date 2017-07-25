@@ -2,8 +2,9 @@ const emoji = require('node-emoji');
 const colors = require('ansi-256-colors');
 const timestamp = require('../util/timestamp');
 const hexToRgb = require('../util/hexToRgb');
+const imageElement = require('./image');
 
-module.exports = (message, mdy = false) => {
+async function messageElement(message, mdy = false) {
   const client = message.client;
   const color = (...x) => {
     if (message.member) {
@@ -29,5 +30,14 @@ module.exports = (message, mdy = false) => {
 
   for (const match of content.match(/:[^:]+:/g) || []) content = content.replace(match, emoji.get(match));
 
+  await message.attachments.map((x) => imageElement({
+    id: x.id,
+    url: x.proxyURL,
+    width: x.width,
+    height: x.height,
+  }));
+
   return `{yellow-fg}${timestamp(message.createdAt, mdy)}{/yellow-fg} ${color(message.author.tag)} ${content}`;
-};
+}
+
+module.exports = messageElement;

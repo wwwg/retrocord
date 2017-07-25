@@ -7,7 +7,7 @@
 # RETROCORD
 *__The best in life.__*
 
-`npm i -g retrocord` OR [download a release](/releases)
+`npm i -g retrocord` OR [download a release](https://github.com/devsnek/retrocord/releases)
 
 ![](https://s.gus.host/retrocord.png)
 

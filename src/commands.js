@@ -42,8 +42,9 @@ module.exports = {
       } else {
         ctx.gui.put(`{bold}Joining #${channel.name} in ${scope.name}{/bold}`);
       }
-      channel.fetchMessages({ limit: 5 }).then((messages) => {
-        for (const message of messages.array().reverse()) ctx.gui.put(messageElement(message), { format: false });
+      channel.fetchMessages({ limit: 5 }).then(async(messages) => {
+        messages = await Promise.all(messages.map((m) => messageElement(m)));
+        for (const message of messages.reverse()) ctx.gui.put(message);
       });
       ctx.current.channel = channel;
       ctx.current.scope = scope;
@@ -64,10 +65,9 @@ module.exports = {
     run: (ctx, args) => {
       ctx.current.channel.search({ content: args.join(' ') })
         .then((r) => r.results.map((msgs) => msgs.find((m) => m.hit)))
-        .then((messages) => {
+        .then(async(messages) => {
           ctx.gui.put('{bold}-- BEGIN SEARCH --{/bold}');
-          const results = messages
-            .map((r) => messageElement(r, true))
+          const results = await (Promise.all(messages).map((r) => messageElement(r, true)))
             .slice(0, 10)
             .reverse()
             .join('\n');

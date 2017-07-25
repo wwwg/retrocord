@@ -1,5 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+const util = require('util');
+
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsync = util.promisify(fs.writeFile);
+const existsAsync = util.promisify(fs.exists);
+const unlinkAsync = util.promisify(fs.unlink);
 
 const OS_STORAGE_PATH = getOSStoragePath();
 if (!fs.existsSync(OS_STORAGE_PATH)) fs.mkdirSync(OS_STORAGE_PATH);
@@ -28,34 +34,23 @@ module.exports = {
     fs.writeFileSync(STORAGE_PATH, JSON.stringify(cache));
     return ret;
   },
-  getFile(key) {
-    try {
-      return fs.readFileSync(path.join(OS_STORAGE_PATH, key));
-    } catch (err) {
-      return null;
-    }
-  },
   getFilePath(key) {
     return path.join(OS_STORAGE_PATH, key);
   },
+  getFile(key) {
+    return readFileAsync(path.join(OS_STORAGE_PATH, key))
+      .catch(() => null);
+  },
   setFile(key, value) {
-    try {
-      fs.writeFileSync(path.join(OS_STORAGE_PATH, key), value);
-      return true;
-    } catch (err) {
-      return false;
-    }
+    return writeFileAsync(path.join(OS_STORAGE_PATH, key), value)
+      .then(() => true).catch(() => false);
   },
   hasFile(key) {
-    return fs.existsSync(path.join(OS_STORAGE_PATH, key));
+    return existsAsync(path.join(OS_STORAGE_PATH, key)).catch(() => false);
   },
   deleteFile(key) {
-    try {
-      fs.unlinkSync(path.join(OS_STORAGE_PATH, key));
-      return true;
-    } catch (err) {
-      return false;
-    }
+    return unlinkAsync(path.join(OS_STORAGE_PATH, key))
+      .then(() => true).catch(() => false);
   },
 };
 
