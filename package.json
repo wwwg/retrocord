@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint -c ./.eslintrc.json src"
+    "lint": "eslint -c ./.eslintrc.json src",
+    "build": "pkg ./package.json --out-path=./build",
+    "full": "npm run lint && npm run build"
   },
   "repository": {
     "type": "git",
@@ -18,7 +20,7 @@
   "homepage": "https://github.com/devsnek/retrocord#readme",
   "dependencies": {
     "ansi-256-colors": "^1.1.0",
-    "blessed": "^0.1.81",
+    "blessed": "github:devsnek/blessed",
     "chalk": "^2.0.1",
     "discord.js": "github:hydrabolt/discord.js",
     "erlpack": "github:hammerandchisel/erlpack",
@@ -26,6 +28,12 @@
     "uws": "^8.14.0"
   },
   "devDependencies": {
-    "eslint": "^4.3.0"
+    "eslint": "^4.3.0",
+    "pkg": "^4.1.3"
+  },
+  "bin": "./src/index.js",
+  "pkg": {
+    "scripts": "./src/**/*.js",
+    "assets": "./assets/*"
   }
 }
