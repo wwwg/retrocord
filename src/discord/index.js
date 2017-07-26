@@ -5,6 +5,8 @@ const client = new Discord.Client({
   // some options
 });
 
+client.run = run;
+
 function run(ctx) {
   client.on('ready', () => {
     if (client.user.bot) {
