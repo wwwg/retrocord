@@ -3,6 +3,7 @@ const colors = require('ansi-256-colors');
 const timestamp = require('../util/timestamp');
 const hexToRgb = require('../util/hexToRgb');
 const imageElement = require('./image');
+const shortlink = require('../util/shortlink');
 
 async function messageElement(message, mdy = false) {
   const client = message.client;
@@ -31,8 +32,9 @@ async function messageElement(message, mdy = false) {
   for (const match of content.match(/:[^:]+:/g) || []) content = content.replace(match, emoji.get(match));
 
   let images = await Promise.all(message.attachments.map(async (a) => {
+    const short = a.url.replace('https://cdn.discordapp.com/attachments/', '').split('/');
     const ansi = await imageElement({ id: a.id, url: a.proxyURL, width: a.width, height: a.height });
-    return `${a.filename} (${a.width}x${a.height})\n${ansi}`;
+    return `${a.filename} (${a.width}x${a.height}) ${shortlink(short[2], short[0], short[1])}\n${ansi}`;
   }));
 
   let attachments = [...images];
