@@ -73,3 +73,10 @@ function getEmojis() {
     return null;
   }
 }
+
+process.on('unhandledRejection', handleError);
+process.on('uncaughtException', handleError);
+
+function handleError(e) {
+  ctx.gui.put(`{red-fg}{bold}Unhandled Error (You should report this){/bold}{/red-fg}\n${e.stack}\n {red-fg}{bold}-- End Error --{/bold}{/red-fg}`);
+}

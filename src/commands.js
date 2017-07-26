@@ -61,16 +61,22 @@ module.exports = {
   },
   search: {
     run: (ctx, args) => {
-      ctx.current.channel.search({ content: args.join(' ') })
-        .then((r) => r.results.map((msgs) => msgs.find((m) => m.hit)))
-        .then(async(messages) => {
-          ctx.gui.put('{bold}-- BEGIN SEARCH --{/bold}');
-          const results = messages
-            .slice(0, 10)
-            .reverse();
-          await ctx.gui.putMessages(results, { mdy: true });
-          ctx.gui.put('{bold}--- END SEARCH ---{/bold}');
-        });
+      ctx.current.channel.search({
+        content: args.join(' '),
+        has: args.has,
+        authorType: args['author-type'],
+        limit: args.limit || 10,
+      })
+      .then((r) => r.results.map((msgs) => msgs.find((m) => m.hit)))
+      .then(async(messages) => {
+        ctx.gui.put('{bold}-- BEGIN SEARCH --{/bold}');
+	ctx.gui.put(`{bold} Query: ${args.join(' ')}{/bold}`);
+        await ctx.gui.putMessages(messages.reverse(), { mdy: true });
+        ctx.gui.put('{bold}--- END SEARCH ---{/bold}');
+      })
+      .catch((err) => {
+        ctx.gui.put(`{bold}Search Error (${err.message}){/bold}`);
+      });
     },
   },
 };
