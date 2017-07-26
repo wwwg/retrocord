@@ -66,6 +66,7 @@ class GUI extends EventEmitter {
 const screen = blessed.screen({
   smartCSR: true,
   title: 'retrocord',
+  fullUnicode: true,
 });
 
 const gui = new GUI(screen);
