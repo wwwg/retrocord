@@ -16,10 +16,11 @@ const ctx = {
     scope: null,
     channel: null,
   },
+  rc: Storage.getRc(),
 };
 
 gui.on('input', (message) => {
-  if (message.startsWith(':')) {
+  if (message.startsWith(ctx.rc.prefix || '/')) {
     const [command, ...args] = message.slice(1).split(' ');
     if (command in commands) commands[command].run(ctx, snekparse(args));
   } else {

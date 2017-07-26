@@ -18,6 +18,20 @@ try {
 } catch (err) {} // eslint-disable-line no-empty
 
 module.exports = {
+  getRc() {
+    try {
+      const src = fs.readFileSync(path.join(OS_STORAGE_PATH, '.retrorc')).toString();
+      return src
+        .trim().split('\n')
+        .map((p) => p.split('='))
+        .reduce((o, [k, v]) => {
+          o[k] = v;
+          return o;
+        }, {});
+    } catch (err) {
+      return {};
+    }
+  },
   get(key) {
     return cache[key];
   },
@@ -56,12 +70,11 @@ module.exports = {
 
 function getOSStoragePath() {
   switch (process.platform) {
-    case 'darwin':
-      return `${process.env.HOME}/Library/Application Support/retrocord`;
     case 'win32':
       return `${process.env.APPDATA}\\retrocord`;
+    case 'darwin':
     case 'linux':
-      return `${process.env.HOME}/.retrocord`;
+      return `${process.env.HOME}/.config/retrocord`;
     default:
       return '.';
   }
