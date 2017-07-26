@@ -30,14 +30,16 @@ async function messageElement(message, mdy = false) {
 
   for (const match of content.match(/:[^:]+:/g) || []) content = content.replace(match, emoji.get(match));
 
-  await message.attachments.map((x) => imageElement({
-    id: x.id,
-    url: x.proxyURL,
-    width: x.width,
-    height: x.height,
+  let images = await Promise.all(message.attachments.map(async (a) => {
+    const ansi = await imageElement({ id: a.id, url: a.proxyURL, width: a.width, height: a.height });
+    return `${a.filename} (${a.width}x${a.height})\n${ansi}`;
   }));
 
-  return `{yellow-fg}${timestamp(message.createdAt, mdy)}{/yellow-fg} ${color(message.author.tag)} ${content}`;
+  let attachments = [...images];
+
+  if (!content) content = '{bold}(No Content){/bold}';
+  if (attachments.length) attachments = `{bold}Attachments:{/bold} ${attachments.join('\n')}`;
+  return `{yellow-fg}${timestamp(message.createdAt, mdy)}{/yellow-fg} ${color(message.author.tag)} ${content}\n${attachments}`.trim();
 }
 
 module.exports = messageElement;

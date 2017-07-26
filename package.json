@@ -25,6 +25,7 @@
     "discord.js": "github:hydrabolt/discord.js",
     "erlpack": "github:hammerandchisel/erlpack",
     "node-emoji": "^1.8.1",
+    "sharp": "^0.18.2",
     "snekparse": "github:devsnek/snekparse",
     "uws": "^8.14.0"
   },
