@@ -22,7 +22,7 @@ async function messageElement(message, mdy = false) {
 
   for (const mention of message.mentions.users.values()) {
     if (mention.id === client.user.id) {
-      content = content.replace(new RegExp(`<@!?${mention.id}>`, 'g'), `{red+bold}@${client.user.username}{/}`);
+      content = content.replace(new RegExp(`<@!?${mention.id}>`, 'g'), `{red-fg}{bold}@${client.user.username}{/bold}{/red-fg}`);
       process.stdout.write('\x07');
     } else {
       content = content.replace(new RegExp(`<@!?${mention.id}>`, 'g'), `@${mention.username}`);

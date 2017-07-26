@@ -42,13 +42,13 @@ gui.on('input', (message) => {
 
     const customEmojis = getEmojis();
     for (const match of message.match(/:[^:]+:/g) || []) {
-      if (customEmojis) {
-        const found = customEmojis.find((x) => x.name.toLowerCase() === match.replace(/:/g, '').toLowerCase());
-        message = message.replace(match, found ? found.toString() : null || emoji.get(match));
-        if (!found) message = message.replace(match, emoji.get(match));
-      } else {
-        message = message.replace(match, emoji.get(match));
+      const unicode = emoji.get(match);
+      if (unicode !== match) {
+        message = message.replace(match, unicode);
+        continue;
       }
+      const found = customEmojis.find((x) => x.name.toLowerCase() === match.replace(/:/g, '').toLowerCase());
+      message = message.replace(match, found ? found.toString() : emoji.get(match));
     }
 
     if (ctx.current.channel) ctx.current.channel.send(message);
@@ -70,7 +70,7 @@ function getEmojis() {
   } else if (ctx.current.scope && ctx.current.scope !== 'dm') {
     return ctx.current.scope.emojis;
   } else {
-    return null;
+    return [];
   }
 }
 
