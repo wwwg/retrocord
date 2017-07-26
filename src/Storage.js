@@ -8,9 +8,11 @@ const existsAsync = util.promisify(fs.exists);
 const unlinkAsync = util.promisify(fs.unlink);
 
 const OS_STORAGE_PATH = getOSStoragePath();
-if (!fs.existsSync(OS_STORAGE_PATH)) fs.mkdirSync(OS_STORAGE_PATH);
+if (!fs.existsSync(OS_STORAGE_PATH)) {
+  fs.mkdirSync(OS_STORAGE_PATH);
+  fs.mkdirSync(path.join(OS_STORAGE_PATH, 'files'));
+}
 const STORAGE_PATH = path.join(OS_STORAGE_PATH, 'storage.json');
-// if (!fs.existsSync(STORAGE_PATH)) fs.mkdirSync(STORAGE_PATH);
 
 let cache = {};
 try {
@@ -49,21 +51,21 @@ module.exports = {
     return ret;
   },
   getFilePath(key) {
-    return path.join(OS_STORAGE_PATH, key);
+    return path.join(OS_STORAGE_PATH, 'files', key);
   },
   getFile(key) {
-    return readFileAsync(path.join(OS_STORAGE_PATH, key))
+    return readFileAsync(path.join(OS_STORAGE_PATH, 'files', key))
       .catch(() => null);
   },
   setFile(key, value) {
-    return writeFileAsync(path.join(OS_STORAGE_PATH, key), value)
+    return writeFileAsync(path.join(OS_STORAGE_PATH, 'files', key), value)
       .then(() => true).catch(() => false);
   },
   hasFile(key) {
-    return existsAsync(path.join(OS_STORAGE_PATH, key)).catch(() => false);
+    return existsAsync(path.join(OS_STORAGE_PATH, 'files', key)).catch(() => false);
   },
   deleteFile(key) {
-    return unlinkAsync(path.join(OS_STORAGE_PATH, key))
+    return unlinkAsync(path.join(OS_STORAGE_PATH, 'files', key))
       .then(() => true).catch(() => false);
   },
 };
