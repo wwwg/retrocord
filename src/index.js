@@ -28,12 +28,14 @@ gui.on('input', (message) => {
     const args = message.split(' ');
     for (const word in args) {
       if (args[word].startsWith('@')) {
-        const [username, discrim] = args[word].split('#').map((x) => x.slice(1).toLowerCase());
-        let user = ctx.discord.users.find((u) => {
-          let match = false;
-          if (u.username.replace(/ /g, '').toLowerCase() === username) match = true;
-          if (discrim && u.discriminator !== discrim) match = false;
-          return match;
+        const [username, discrim] = args[word].slice(1).split('#').map((x) => x.toLowerCase());
+        const users = ctx.current.scope && ctx.current.scope !== 'dm' ?
+          ctx.current.scope.members.map((m) => m.user) :
+          ctx.discord.users;
+        let user = users.find((u) => {
+          if (u.username.replace(/ /g, '').toLowerCase() !== username) return false;
+          if (discrim && u.discriminator !== discrim) return false;
+          return true;
         });
         if (user) args[word] = user.toString();
       } else if (args[word].startsWith('#')) {
