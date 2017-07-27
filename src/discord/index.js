@@ -23,6 +23,7 @@ function run(ctx) {
     switch (message.channel.type) {
       case 'dm': {
         if (message.author.id === client.user.id) return;
+        // eslint-disable-next-line max-len
         ctx.gui.put(`{yellow-fg}${timestamp(message.createdAt, false)}{/yellow-fg} {bold}${message.author.tag}{/bold} has sent you a message!`);
         break;
       }
@@ -36,6 +37,7 @@ function run(ctx) {
         if (message.channel === ctx.current.channel) {
           ctx.gui.putMessage(message);
         } else if (message.mentions.users.has(client.user.id)) {
+          // eslint-disable-next-line max-len
           ctx.gui.put(`{yellow-fg}${timestamp(message.createdAt, false)}{/yellow-fg} You were mentioned in {bold}${message.guild.name} #${message.channel.name}{/bold} by {bold}${message.author.tag}{/bold}`);
         }
         break;

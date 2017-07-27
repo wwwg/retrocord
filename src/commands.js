@@ -67,16 +67,28 @@ module.exports = {
         authorType: args['author-type'],
         limit: args.limit || 10,
       })
-      .then((r) => r.results.map((msgs) => msgs.find((m) => m.hit)))
-      .then(async(messages) => {
-        ctx.gui.put('{bold}-- BEGIN SEARCH --{/bold}');
-	ctx.gui.put(`{bold} Query: ${args.join(' ')}{/bold}`);
-        await ctx.gui.putMessages(messages.reverse(), { mdy: true });
-        ctx.gui.put('{bold}--- END SEARCH ---{/bold}');
-      })
-      .catch((err) => {
-        ctx.gui.put(`{bold}Search Error (${err.message}){/bold}`);
-      });
+        .then((r) => r.results.map((msgs) => msgs.find((m) => m.hit)))
+        .then(async(messages) => {
+          ctx.gui.put('{bold}-- BEGIN SEARCH --{/bold}');
+          ctx.gui.put(`{bold} Query: ${args.join(' ')}{/bold}`);
+          await ctx.gui.putMessages(messages.reverse(), { mdy: true });
+          ctx.gui.put('{bold}--- END SEARCH ---{/bold}');
+        })
+        .catch((err) => {
+          ctx.gui.put(`{bold}Search Error (${err.message}){/bold}`);
+        });
+    },
+  },
+  set: {
+    run: (ctx, [name, value]) => {
+      if (ctx.rc.set(name, value)) ctx.gui.put(`{bold}Changed setting "${name}" to "${value}"{/bold}`);
+      else ctx.gui.put(`{bold}Failed to change setting "${name}" to "${value}"{/bold}`);
+    },
+  },
+  tableflip: {
+    run: (ctx, args) => {
+      if (!ctx.current.channel) return;
+      ctx.current.channel.send(`${args.join(' ')} w(╯°□°）╯︵ ┻━┻`.trim());
     },
   },
 };

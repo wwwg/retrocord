@@ -16,7 +16,7 @@ const ctx = {
     scope: null,
     channel: null,
   },
-  rc: Storage.getRc(),
+  rc: Storage.rc,
 };
 
 gui.on('input', (message) => {
@@ -28,7 +28,7 @@ gui.on('input', (message) => {
     const args = message.split(' ');
     for (const word in args) {
       if (args[word].startsWith('@')) {
-        const [username, discrim] = args[word].split('#').map((x) => x.replace('@', '').toLowerCase());
+        const [username, discrim] = args[word].split('#').map((x) => x.slice(1).toLowerCase());
         let user = ctx.discord.users.find((u) => {
           let match = false;
           if (u.username.replace(/ /g, '').toLowerCase() === username) match = true;
@@ -36,6 +36,14 @@ gui.on('input', (message) => {
           return match;
         });
         if (user) args[word] = user.toString();
+      } else if (args[word].startsWith('#')) {
+        if (!ctx.current.scope || ctx.current.scope === 'dm') continue;
+        const name = args[word].slice(1);
+        const channel = ctx.current.scope.channels
+          .filter((c) => c.type === 'text')
+          .find((c) =>
+            c.name.toLowerCase() === name.toLowerCase());
+        if (channel) args[word] = channel.toString();
       }
     }
     message = args.join(' ');
@@ -78,5 +86,6 @@ process.on('unhandledRejection', handleError);
 process.on('uncaughtException', handleError);
 
 function handleError(e) {
-  ctx.gui.put(`{red-fg}{bold}Unhandled Error (You should report this){/bold}{/red-fg}\n${e.stack}\n {red-fg}{bold}-- End Error --{/bold}{/red-fg}`);
+  ctx.gui.put(`{red-fg}{bold}Unhandled Error (You should report this){/bold}{/red-fg}\n${e.stack}
+ {red-fg}{bold}-- End Error --{/bold}{/red-fg}`);
 }
