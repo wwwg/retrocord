@@ -7,7 +7,7 @@ const commands = require('./commands');
 const assets = require('./assets');
 const discord = require('./discord');
 const snekparse = require('snekparse');
-const jaroWinkler = require('jaro-winkler');
+const userLookup = require('./util/userLookup');
 
 const ctx = {
   gui, assets,
@@ -30,16 +30,11 @@ gui.on('input', (message) => {
     const args = message.split(' ');
     for (const word in args) {
       if (args[word].startsWith('@')) {
-        const [username, discrim] = args[word].slice(1).split('#').map((x) => x.toLowerCase());
+        // const [username, discrim] = args[word].slice(1).toLowerCase().split('#');
         const users = ctx.current.scope && ctx.current.scope !== 'dm' ?
           ctx.current.scope.members.map((m) => m.user) :
           ctx.discord.users;
-        let user = users.find((u) => {
-          const scan = u.username.replace(/ /g, '').toLowerCase();
-          if (scan !== username && jaroWinkler(scan, username) < 0.9) return false;
-          if (discrim && u.discriminator !== discrim) return false;
-          return true;
-        });
+        const user = userLookup(args[word].slice(1), users);
         if (user) args[word] = user.toString();
       } else if (args[word].startsWith('#')) {
         if (!ctx.current.scope || ctx.current.scope === 'dm') continue;

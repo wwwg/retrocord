@@ -1,5 +1,5 @@
-const jaroWinkler = require('jaro-winkler');
 const Storage = require('./Storage');
+const userLookup = require('./util/userLookup');
 
 module.exports = {
   q: {
@@ -25,14 +25,12 @@ module.exports = {
       let [scope, channel] = args.join(' ').split(SPLIT_RE).map((x) => x.trim());
       if (channel) channel = channel.toLowerCase();
       if (scope === 'dm') {
+        const query = channel;
         channel = ctx.discord.channels
-          .filter((c) => ['group', 'dm'].includes(c.type))
-          .find((c) => {
-            if (c.name) return c.name.toLowerCase() === channel;
-            const scan = c.recipient.username.replace(/ /g, '').toLowerCase();
-            if (scan !== channel && jaroWinkler(scan, channel) < 0.9) return false;
-            return true;
-          });
+          .filter((c) => c.type === 'group')
+          .find((c) => c.name && c.name.toLowerCase() === query);
+        if (!channel) channel = userLookup(query);
+        if (channel) channel = await channel.createDM();
       } else {
         scope = scope ?
           ctx.discord.guilds.find((g) => g.name.toLowerCase() === scope.toLowerCase()) :
