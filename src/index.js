@@ -36,7 +36,7 @@ gui.on('input', (message) => {
           ctx.discord.users;
         let user = users.find((u) => {
           const scan = u.username.replace(/ /g, '').toLowerCase();
-          if (scan !== username && jaroWinkler(scan, username) < 0.8) return false;
+          if (scan !== username && jaroWinkler(scan, username) < 0.9) return false;
           if (discrim && u.discriminator !== discrim) return false;
           return true;
         });

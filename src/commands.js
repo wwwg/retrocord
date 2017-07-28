@@ -30,7 +30,7 @@ module.exports = {
           .find((c) => {
             if (c.name) return c.name.toLowerCase() === channel;
             const scan = c.recipient.username.replace(/ /g, '').toLowerCase();
-            if (scan !== channel && jaroWinkler(scan, channel) < 0.8) return false;
+            if (scan !== channel && jaroWinkler(scan, channel) < 0.9) return false;
             return true;
           });
       } else {
