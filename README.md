@@ -42,11 +42,11 @@ install with `npm i -g retrocord`
 - `q/quit/exit` - exit the client
 
 ## Gallery
-Message Types
+Message Types  
 ![](pictures/message_types.png)
 
-NSFW Channels
+NSFW Channels  
 ![](pictures/nsfw.png)
 
-Tableflip Command
+Tableflip Command  
 ![](pictures/tableflip.png)
