@@ -20,6 +20,11 @@ async function messageElement(message, mdy = false) {
   const time = `{yellow-fg}${timestamp(message.createdAt, mdy)}{/yellow-fg}`;
   switch (message.type) {
     case 'DEFAULT': {
+      const ctx = require('../index.js');
+      if (message.client.user.blocked.has(message.author.id)) {
+        if (ctx.rc.blocked === 'true') return;
+        return `${time} 1 Blocked message`;
+      }
       let content = message.content.replace(/([^\s])(🏻|🏼|🏽|🏾|🏿)/g, (_, m) => m);
 
       for (const mention of message.mentions.users.values()) {

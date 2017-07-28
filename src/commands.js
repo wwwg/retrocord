@@ -30,7 +30,12 @@ module.exports = {
           .filter((c) => c.type === 'group')
           .find((c) => c.name && c.name.toLowerCase() === query);
         if (!channel) channel = userLookup(query);
-        if (channel) channel = await channel.createDM();
+        if (channel) {
+          channel = await channel.createDM().catch((err) => {
+            ctx.gui.put(`{bold}${err.message}{/bold}`);
+            return null;
+          });
+        }
       } else {
         scope = scope ?
           ctx.discord.guilds.find((g) => g.name.toLowerCase() === scope.toLowerCase()) :

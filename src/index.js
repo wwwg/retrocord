@@ -20,6 +20,8 @@ const ctx = {
   rc: Storage.rc,
 };
 
+module.exports = ctx;
+
 gui.on('input', (message) => {
   const prefix = ctx.rc.prefix || '/';
   if (message.startsWith(prefix)) {
@@ -59,7 +61,11 @@ gui.on('input', (message) => {
       message = message.replace(match, found ? found.toString() : emoji.get(match));
     }
 
-    if (ctx.current.channel) ctx.current.channel.send(message);
+    if (ctx.current.channel) {
+      ctx.current.channel.send(message).catch((err) => {
+        ctx.gui.put(`{bold}${err.message}{/bold}`);
+      });
+    }
   }
 });
 
