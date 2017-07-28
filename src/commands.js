@@ -1,3 +1,4 @@
+const jaroWinkler = require('jaro-winkler');
 const Storage = require('./Storage');
 
 module.exports = {
@@ -22,10 +23,16 @@ module.exports = {
     run: async(ctx, args) => {
       const SPLIT_RE = /@|#/;
       let [scope, channel] = args.join(' ').split(SPLIT_RE).map((x) => x.trim());
+      if (channel) channel = channel.toLowerCase();
       if (scope === 'dm') {
         channel = ctx.discord.channels
           .filter((c) => ['group', 'dm'].includes(c.type))
-          .find((c) => (c.name || c.recipient.username).toLowerCase() === channel.toLowerCase());
+          .find((c) => {
+            if (c.name) return c.name.toLowerCase() === channel;
+            const scan = c.recipient.username.replace(/ /g, '').toLowerCase();
+            if (scan !== channel && jaroWinkler(scan, channel) < 0.8) return false;
+            return true;
+          });
       } else {
         scope = scope ?
           ctx.discord.guilds.find((g) => g.name.toLowerCase() === scope.toLowerCase()) :

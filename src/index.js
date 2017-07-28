@@ -7,6 +7,7 @@ const commands = require('./commands');
 const assets = require('./assets');
 const discord = require('./discord');
 const snekparse = require('snekparse');
+const jaroWinkler = require('jaro-winkler');
 
 const ctx = {
   gui, assets,
@@ -34,7 +35,8 @@ gui.on('input', (message) => {
           ctx.current.scope.members.map((m) => m.user) :
           ctx.discord.users;
         let user = users.find((u) => {
-          if (u.username.replace(/ /g, '').toLowerCase() !== username) return false;
+          const scan = u.username.replace(/ /g, '').toLowerCase();
+          if (scan !== username && jaroWinkler(scan, username) < 0.8) return false;
           if (discrim && u.discriminator !== discrim) return false;
           return true;
         });

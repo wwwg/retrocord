@@ -24,6 +24,7 @@
     "chalk": "^2.0.1",
     "discord.js": "github:hydrabolt/discord.js",
     "erlpack": "github:hammerandchisel/erlpack",
+    "jaro-winkler": "^0.2.8",
     "jimp": "^0.2.28",
     "node-emoji": "^1.8.1",
     "sharp": "^0.18.2",
