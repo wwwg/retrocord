@@ -9,7 +9,7 @@
 
 install with `npm i -g retrocord`
 
-![](https://s.gus.host/retrocord.png)
+![](pictures/basic.png)
 
 ## Features
 - Cool Commands
@@ -40,3 +40,13 @@ install with `npm i -g retrocord`
 - `nick [...text]` - set your nick in the current guild, if in one
 - `set <name> [value]` - set a setting in your `.retrorc`
 - `q/quit/exit` - exit the client
+
+## Gallery
+Message Types
+![](pictures/message_types.png)
+
+NSFW Channels
+![](pictures/nsfw.png)
+
+Tableflip Command
+![](pictures/tableflip.png)

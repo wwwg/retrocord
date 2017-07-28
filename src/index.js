@@ -32,7 +32,6 @@ gui.on('input', (message) => {
     const args = message.split(' ');
     for (const word in args) {
       if (args[word].startsWith('@')) {
-        // const [username, discrim] = args[word].slice(1).toLowerCase().split('#');
         const users = ctx.current.scope && ctx.current.scope !== 'dm' ?
           ctx.current.scope.members.map((m) => m.user) :
           ctx.discord.users;
