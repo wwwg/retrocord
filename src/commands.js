@@ -24,8 +24,8 @@ module.exports = {
       let [scope, channel] = args.join(' ').split(SPLIT_RE).map((x) => x.trim());
       if (scope === 'dm') {
         channel = ctx.discord.channels
-          .filter((c) => c.type === 'dm')
-          .find((c) => c.recipient.username.toLowerCase() === channel.toLowerCase());
+          .filter((c) => ['group', 'dm'].includes(c.type))
+          .find((c) => (c.name || c.recipient.username).toLowerCase() === channel.toLowerCase());
       } else {
         scope = scope ?
           ctx.discord.guilds.find((g) => g.name.toLowerCase() === scope.toLowerCase()) :
@@ -36,8 +36,12 @@ module.exports = {
           .find((c) => c.name.toLowerCase() === channel.toLowerCase());
       }
       if (!channel) return ctx.gui.put('{bold}Invalid Channel{/bold}');
-      if (channel.recipient) {
-        ctx.gui.put(`{bold}Joining DM with ${channel.recipient.tag}{/bold}`);
+      if (channel.recipient || channel.recipients) {
+        if (channel.recipients) {
+          ctx.gui.put(`{bold}Joining the group conversation in "${channel.name}"{/bold}`);
+        } else {
+          ctx.gui.put(`{bold}Joining DM with ${channel.recipient.tag}{/bold}`);
+        }
       } else {
         if (channel.nsfw && !(Storage.get('nsfwGuildStore') || []).includes(scope.id)) {
           // eslint-disable-next-line max-len
