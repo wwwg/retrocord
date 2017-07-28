@@ -20,27 +20,27 @@ function run(ctx) {
   });
 
   client.on('message', (message) => {
-    switch (message.channel.type) {
-      case 'dm': {
-        if (message.author.id === client.user.id) return;
-        // eslint-disable-next-line max-len
-        ctx.gui.put(`{yellow-fg}${timestamp(message.createdAt, false)}{/yellow-fg} {bold}${message.author.tag}{/bold} has sent you a message!`);
-        break;
-      }
-      case 'group': {
-        if (message.author.id === client.user.id) return;
-        let dmName = message.channel.name === null ? 'Group' : message.channel.name;
-        ctx.gui.put(`{yellow-fg}${timestamp(message.createdAt, false)}{/yellow-fg} {bold}${dmName} has a new message!`);
-        break;
-      }
-      case 'text': {
-        if (message.channel === ctx.current.channel) {
-          ctx.gui.putMessage(message);
-        } else if (message.mentions.users.has(client.user.id)) {
+    if (message.channel === ctx.current.channel) {
+      ctx.gui.putMessage(message);
+    } else if (message.author.id !== client.user.id) {
+      switch (message.channel.type) {
+        case 'dm': {
+          // eslint-disable-next-line max-len
+          ctx.gui.put(`{yellow-fg}${timestamp(message.createdAt, false)}{/yellow-fg} {bold}${message.author.tag}{/bold} has sent you a message!`);
+          break;
+        }
+        case 'group': {
+          const dmName = message.channel.name === null ? 'Group' : message.channel.name;
+          // eslint-disable-next-line max-len
+          ctx.gui.put(`{yellow-fg}${timestamp(message.createdAt, false)}{/yellow-fg} {bold}${dmName} has a new message!`);
+          break;
+        }
+        case 'text': {
+          if (!message.mentions.users.has(client.user.id)) return;
           // eslint-disable-next-line max-len
           ctx.gui.put(`{yellow-fg}${timestamp(message.createdAt, false)}{/yellow-fg} You were mentioned in {bold}${message.guild.name} #${message.channel.name}{/bold} by {bold}${message.author.tag}{/bold}`);
+          break;
         }
-        break;
       }
     }
   });

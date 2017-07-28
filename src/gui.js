@@ -32,11 +32,14 @@ class GUI extends EventEmitter {
       height: 1,
       inputOnFocus: true,
     });
+
+    this.awaitingResponse = false;
   }
 
   init() {
     this.inputbox.key('enter', () => {
-      this.emit('input', this.inputbox.getValue());
+      if (this.awaitingResponse) this.emit('internalInput', this.inputbox.getValue());
+      else this.emit('input', this.inputbox.getValue());
       this.inputbox.clearValue();
       this.inputbox.focus();
       this.screen.render();
@@ -60,6 +63,17 @@ class GUI extends EventEmitter {
 
   putMessage(message, opt) {
     return this.putMessages([message], opt);
+  }
+
+  awaitResponse(text) {
+    this.awaitingResponse = true;
+    return new Promise((resolve) => {
+      this.put(text);
+      this.once('internalInput', (input) => {
+        this.awaitingResponse = false;
+        resolve(input);
+      });
+    });
   }
 }
 

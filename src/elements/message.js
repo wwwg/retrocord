@@ -4,6 +4,7 @@ const timestamp = require('../util/timestamp');
 const hexToRgb = require('../util/hexToRgb');
 const imageElement = require('./image');
 const shortlink = require('../util/shortlink');
+const Storage = require('../Storage');
 
 async function messageElement(message, mdy = false) {
   const color = (...x) => {
@@ -34,11 +35,14 @@ async function messageElement(message, mdy = false) {
     content = `{yellow-bg}{black-fg}${content}{/black-fg}{/yellow-bg}`;
   }
 
-  let images = await Promise.all(message.attachments.map(async(a) => {
-    const short = a.url.replace('https://cdn.discordapp.com/attachments/', '').split('/');
-    const ansi = await imageElement({ id: a.id, url: a.proxyURL, width: a.width, height: a.height });
-    return `${a.filename} (${a.width}x${a.height}) ${shortlink(short[2], short[0], short[1])}\n${ansi}`;
-  }));
+  let images;
+  if (Storage.rc.attachments !== 'false') {
+    images = await Promise.all(message.attachments.map(async(a) => {
+      const short = a.url.replace('https://cdn.discordapp.com/attachments/', '').split('/');
+      const ansi = await imageElement({ id: a.id, url: a.proxyURL, width: a.width, height: a.height });
+      return `${a.filename} (${a.width}x${a.height}) ${shortlink(short[2], short[0], short[1])}\n${ansi}`;
+    }));
+  }
 
   let attachments = [...images];
 

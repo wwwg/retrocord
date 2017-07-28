@@ -19,7 +19,7 @@ module.exports = {
     },
   },
   join: {
-    run: (ctx, args) => {
+    run: async(ctx, args) => {
       const SPLIT_RE = /@|#/;
       let [scope, channel] = args.join(' ').split(SPLIT_RE).map((x) => x.trim());
       if (scope === 'dm') {
@@ -39,6 +39,12 @@ module.exports = {
       if (channel.recipient) {
         ctx.gui.put(`{bold}Joining DM with ${channel.recipient.tag}{/bold}`);
       } else {
+        if (channel.nsfw && !(Storage.get('nsfwGuildStore') || []).includes(scope.id)) {
+          // eslint-disable-next-line max-len
+          const answer = await ctx.gui.awaitResponse('{bold}You must be at least eighteen years old to view this channel. Are you over eighteen and willing to see adult content?{/bold} (respond with yes/no)');
+          if (!['yes', 'y'].includes(answer.toLowerCase())) return;
+          Storage.set('nsfwGuildStore', (Storage.get('nsfwGuildStore') || []).concat(scope.id));
+        }
         ctx.gui.put(`{bold}Joining #${channel.name} in ${scope.name}{/bold}`);
       }
       channel.fetchMessages({ limit: 5 }).then((messages) => {
