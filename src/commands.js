@@ -75,7 +75,7 @@ module.exports = {
         content: args.join(' '),
         has: args.has,
         authorType: args['author-type'],
-        limit: args.limit || 10,
+        limit: +args.limit || 10,
       })
         .then((r) => r.results.map((msgs) => msgs.find((m) => m.hit)))
         .then(async(messages) => {
@@ -98,7 +98,7 @@ module.exports = {
   tableflip: {
     run: (ctx, args) => {
       if (!ctx.current.channel) return;
-      ctx.current.channel.send(`${args.join(' ')} w(╯°□°）╯︵ ┻━┻`.trim());
+      ctx.current.channel.send(`${args.join(' ')} (╯°□°）╯︵ ┻━┻`.trim());
     },
   },
 };
