@@ -20,8 +20,9 @@ const ctx = {
 };
 
 gui.on('input', (message) => {
-  if (message.startsWith(ctx.rc.prefix || '/')) {
-    const [command, ...args] = message.slice(1).split(' ');
+  const prefix = ctx.rc.prefix || '/';
+  if (message.startsWith(prefix)) {
+    const [command, ...args] = message.slice(prefix.length).split(' ');
     if (command in commands) commands[command].run(ctx, snekparse(args));
   } else {
     if (!ctx.allowInput) return;

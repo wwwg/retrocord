@@ -20,7 +20,7 @@ async function messageElement(message, mdy = false) {
   const time = `{yellow-fg}${timestamp(message.createdAt, mdy)}{/yellow-fg}`;
   switch (message.type) {
     case 'DEFAULT': {
-      let content = message.content;
+      let content = message.content.replace(/([^\s])(🏻|🏼|🏽|🏾|🏿)/g, (_, m) => m);
 
       for (const mention of message.mentions.users.values()) {
         content = content.replace(new RegExp(`<@!?${mention.id}>`, 'g'), `{blue-fg}@${mention.tag}{/blue-fg}`);
