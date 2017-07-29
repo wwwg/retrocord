@@ -23,6 +23,7 @@ const ctx = {
 module.exports = ctx;
 
 gui.on('input', (message) => {
+  if(!message.length) return;
   const prefix = ctx.rc.prefix || '/';
   if (message.startsWith(prefix)) {
     const [command, ...args] = message.slice(prefix.length).split(' ');
