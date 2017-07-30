@@ -20,6 +20,10 @@ function run(ctx) {
     } else {
       ctx.gui.put(`{bold}Logged in as ${client.user.tag}{/bold}`, { center: true });
       ctx.allowInput = true;
+      if (!Storage.has('completed_login')) {
+        Storage.set('completed_login', true);
+	ctx.gui.put('{bold}Use the join command to join a guild, dm, or channel{/bold} (/join discord api #general)');
+      }
     }
   });
 

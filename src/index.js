@@ -78,7 +78,7 @@ if (Storage.has('token')) {
   discord.run(ctx);
 } else {
   gui.put('{bold}Please Login!{/bold}', { center: true });
-  gui.put('{bold}Use the login command{/bold} (/login <token>)');
+  if (!Storage.has('completed_login')) gui.put('{bold}Use the login command{/bold} (/login <token>)');
 }
 
 function getEmojis() {
