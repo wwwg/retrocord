@@ -9,7 +9,7 @@ const gui = require('./gui');
 const commands = require('./commands');
 const assets = require('./assets');
 const discord = require('./discord');
-const userLookup = require('./util/userLookup');
+const lookup = require('./util/lookup');
 
 const ctx = {
   gui, assets,
@@ -38,7 +38,7 @@ gui.on('input', (message) => {
         const users = ctx.current.scope && ctx.current.scope !== 'dm' ?
           ctx.current.scope.members.map((m) => m.user) :
           ctx.discord.users;
-        const user = userLookup(args[word].slice(1), users);
+        const user = lookup.user(args[word].slice(1), users);
         if (user) args[word] = user.toString();
       } else if (args[word].startsWith('#')) {
         if (!ctx.current.scope || ctx.current.scope === 'dm') continue;

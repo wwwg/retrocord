@@ -23,6 +23,7 @@
     "blessed": "github:devsnek/blessed",
     "chalk": "^2.0.1",
     "discord.js": "github:hydrabolt/discord.js",
+    "emoji-regex": "^6.5.1",
     "erlpack": "github:hammerandchisel/erlpack",
     "jaro-winkler": "^0.2.8",
     "jimp": "^0.2.28",

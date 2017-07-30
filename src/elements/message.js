@@ -42,16 +42,20 @@ async function messageElement(message, mdy = false) {
         content = `{yellow-bg}{black-fg}${content}{/black-fg}{/yellow-bg}`;
       }
 
-      let images;
+      const IMAGE_RE = /(jpe?g|png|gif)$/;
+      let files;
       if (Storage.rc.attachments !== 'false') {
-        images = await Promise.all(message.attachments.map(async(a) => {
-          const short = a.url.replace(/^.+?\/attachments\//, '').split('/');
-          const ansi = await imageElement({ id: a.id, url: a.proxyURL, width: a.width, height: a.height });
-          return `${a.filename} (${a.width}x${a.height}) ${shortlink(short[2], short[0], short[1])}\n${ansi}`;
+        files = await Promise.all(message.attachments.map(async(a) => {
+          let short = a.url.replace(/^.+?\/attachments\//, '').split('/');
+          short = shortlink(short[2], short[0], short[1]);
+          const i = IMAGE_RE.test(a.proxyURL);
+          const ansi = i ?
+            await imageElement({ id: a.id, url: a.proxyURL, width: a.width, height: a.height }) : null;
+          return `${a.filename}${i ? ` (${a.width}x${a.height})` : ''} ${short}\n${ansi || ''}`.trim();
         }));
       }
 
-      let attachments = [...images];
+      let attachments = [...files];
 
       if (!content) content = '{bold}(No Content){/bold}';
       if (attachments.length) attachments = `{bold}Attachments:{/bold} ${attachments.join('\n')}`;

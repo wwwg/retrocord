@@ -2,11 +2,11 @@ const Discord = require('discord.js');
 const timestamp = require('../util/timestamp');
 
 const client = new Discord.Client({
-  http: {
+  http: process.snekv ? {
     api: process.snekv.api,
     cdn: process.snekv.cdn,
     invite: process.snekv.invites,
-  },
+  } : undefined,
 });
 
 client.run = run;

@@ -31,10 +31,14 @@ try {
 
 async function imageElement({ id, url, width, height }) {
   if (await Storage.hasFile(id)) return makeImage({ path: Storage.getFilePath(id), width, height });
-  const data = await request.get(url)
-    .then((r) => resize(r.body, width, height));
-  await Storage.setFile(id, data);
-  return makeImage({ path: Storage.getFilePath(id), width, height });
+  try {
+    const data = await request.get(url)
+      .then((r) => resize(r.body, width, height));
+    await Storage.setFile(id, data);
+    return makeImage({ path: Storage.getFilePath(id), width, height });
+  } catch (err) {
+    return null;
+  }
 }
 
 function makeImage({ path }) {

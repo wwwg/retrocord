@@ -1,5 +1,5 @@
 const Storage = require('./Storage');
-const userLookup = require('./util/userLookup');
+const lookup = require('./util/lookup');
 
 module.exports = {
   q: {
@@ -30,7 +30,7 @@ module.exports = {
           .filter((c) => c.type === 'group')
           .find((c) => c.name && c.name.toLowerCase() === query);
         if (!channel) {
-          channel = userLookup(query);
+          channel = lookup.user(query);
           if (channel) {
             channel = await channel.createDM().catch((err) => {
               ctx.gui.put(`{bold}${err.message}{/bold}`);
@@ -39,9 +39,7 @@ module.exports = {
           }
         }
       } else {
-        scope = scope ?
-          ctx.discord.guilds.find((g) => g.name.toLowerCase() === scope.toLowerCase()) :
-          ctx.current.scope;
+        scope = scope ? lookup.guild(scope) : ctx.current.scope;
         if (!scope) return ctx.gui.put('{bold}Invalid Guild{/bold}');
         channel = channel ?
           scope.channels
