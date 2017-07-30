@@ -107,6 +107,12 @@ module.exports = {
       else ctx.gui.put(`{bold}Failed to change setting "${name}" to "${value}"{/bold}`);
     },
   },
+  shrug: {
+    run: (ctx, args) => {
+      if (!ctx.current.channel) return;
+      ctx.current.channel.send(`${args.join(' ')} ¯\\_(ツ)_/¯`.trim());
+    },
+  },
   tableflip: {
     run: (ctx, args) => {
       if (!ctx.current.channel) return;
