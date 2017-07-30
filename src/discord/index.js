@@ -1,14 +1,18 @@
 const Discord = require('discord.js');
-const Storage = require('../Storage');
 const timestamp = require('../util/timestamp');
 
 const client = new Discord.Client({
-  // some options
+  http: {
+    api: process.snekv.api,
+    cdn: process.snekv.cdn,
+    invite: process.snekv.invites,
+  },
 });
 
 client.run = run;
 
 function run(ctx) {
+  const Storage = require('../Storage');
   client.on('ready', () => {
     if (client.user.bot) {
       Storage.delete('token');

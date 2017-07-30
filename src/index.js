@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 
+const snekparse = require('snekparse');
+process.snekv = snekparse(process.argv);
+
 const emoji = require('node-emoji');
 const Storage = require('./Storage');
 const gui = require('./gui');
 const commands = require('./commands');
 const assets = require('./assets');
 const discord = require('./discord');
-const snekparse = require('snekparse');
 const userLookup = require('./util/userLookup');
 
 const ctx = {
@@ -23,7 +25,7 @@ const ctx = {
 module.exports = ctx;
 
 gui.on('input', (message) => {
-  if(!message.length) return;
+  if (!message.length) return;
   const prefix = ctx.rc.prefix || '/';
   if (message.startsWith(prefix)) {
     const [command, ...args] = message.slice(prefix.length).split(' ');

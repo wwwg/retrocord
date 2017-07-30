@@ -45,7 +45,7 @@ async function messageElement(message, mdy = false) {
       let images;
       if (Storage.rc.attachments !== 'false') {
         images = await Promise.all(message.attachments.map(async(a) => {
-          const short = a.url.replace('https://cdn.discordapp.com/attachments/', '').split('/');
+          const short = a.url.replace(/^.+?\/attachments\//, '').split('/');
           const ansi = await imageElement({ id: a.id, url: a.proxyURL, width: a.width, height: a.height });
           return `${a.filename} (${a.width}x${a.height}) ${shortlink(short[2], short[0], short[1])}\n${ansi}`;
         }));

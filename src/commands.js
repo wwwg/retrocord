@@ -43,9 +43,11 @@ module.exports = {
           ctx.discord.guilds.find((g) => g.name.toLowerCase() === scope.toLowerCase()) :
           ctx.current.scope;
         if (!scope) return ctx.gui.put('{bold}Invalid Guild{/bold}');
-        channel = scope.channels
-          .filter((c) => c.type === 'text')
-          .find((c) => c.name.toLowerCase() === channel.toLowerCase());
+        channel = channel ?
+          scope.channels
+            .filter((c) => c.type === 'text')
+            .find((c) => c.name.toLowerCase() === channel.toLowerCase()) :
+          scope.defaultChannel;
       }
       if (!channel) return ctx.gui.put('{bold}Invalid Channel{/bold}');
       if (channel.recipient || channel.recipients) {
@@ -64,7 +66,7 @@ module.exports = {
         ctx.gui.put(`{bold}Joining #${channel.name} in ${scope.name}{/bold}`);
       }
       channel.fetchMessages({ limit: 5 }).then((messages) => {
-        ctx.gui.putMessages(messages.array().reverse());
+        ctx.gui.putMessages(messages.array().reverse(), { mdy: true });
       });
       ctx.current.channel = channel;
       ctx.current.scope = scope;
@@ -111,6 +113,19 @@ module.exports = {
     run: (ctx, args) => {
       if (!ctx.current.channel) return;
       ctx.current.channel.send(`${args.join(' ')} (╯°□°）╯︵ ┻━┻`.trim());
+    },
+  },
+  guilds: {
+    run: (ctx) => {
+      ctx.gui.put('{bold}Available Guilds:{/bold}');
+      ctx.gui.put(ctx.discord.guilds.map((g) => g.name).join(', '));
+    },
+  },
+  channels: {
+    run: (ctx) => {
+      if (!ctx.current.scope || ctx.current.scope === 'dm') return;
+      ctx.gui.put('{bold}Available Channels:{/bold}');
+      ctx.gui.put(ctx.current.scope.channels.filter((c) => c.type === 'text').map((g) => g.name).join(', '));
     },
   },
 };

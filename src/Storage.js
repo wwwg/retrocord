@@ -1,6 +1,9 @@
+const discord = require('./discord');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
+
+const SCOPE = discord.client.options.http.api;
 
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
@@ -52,18 +55,18 @@ try {
 module.exports = {
   rc: cache.rc,
   get(key) {
-    return cache.storage[key];
+    return cache.storage[SCOPE][key];
   },
   set(key, value) {
-    const ret = cache.storage[key] = value;
+    const ret = cache.storage[SCOPE][key] = value;
     fs.writeFileSync(STORAGE_PATH, JSON.stringify(cache.storage));
     return ret;
   },
   has(key) {
-    return Reflect.has(cache.storage, key);
+    return Reflect.has(cache.storage[SCOPE], key);
   },
   delete(key) {
-    const ret = delete cache.storage[key];
+    const ret = delete cache.storage[SCOPE][key];
     fs.writeFileSync(STORAGE_PATH, JSON.stringify(cache.storage));
     return ret;
   },
@@ -86,6 +89,8 @@ module.exports = {
       .then(() => true).catch(() => false);
   },
 };
+
+if (!cache.storage[SCOPE]) cache.storage[SCOPE] = {};
 
 function getOSStoragePath() {
   switch (process.platform) {
