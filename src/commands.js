@@ -55,11 +55,11 @@ module.exports = {
           ctx.gui.put(`{bold}Joining DM with ${channel.recipient.tag}{/bold}`);
         }
       } else {
-        if (channel.nsfw && !(Storage.get('nsfwGuildStore') || []).includes(scope.id)) {
+        if (channel.nsfw && !(Storage.get('nsfw_store') || []).includes(scope.id)) {
           // eslint-disable-next-line max-len
           const answer = await ctx.gui.awaitResponse('{bold}You must be at least eighteen years old to view this channel. Are you over eighteen and willing to see adult content?{/bold} (respond with yes/no)');
           if (!['yes', 'y'].includes(answer.toLowerCase())) return;
-          Storage.set('nsfwGuildStore', (Storage.get('nsfwGuildStore') || []).concat(scope.id));
+          Storage.set('nsfw_store', (Storage.get('nsfw_store') || []).concat(scope.id));
         }
         ctx.gui.put(`{bold}Joining #${channel.name} in ${scope.name}{/bold}`);
       }
