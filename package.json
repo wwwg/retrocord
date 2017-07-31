@@ -5,8 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint -c ./.eslintrc.json src",
-    "build": "pkg ./package.json --out-path=./build",
-    "full": "npm run lint && npm run build"
+    "full": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -26,7 +25,6 @@
     "emoji-regex": "^6.5.1",
     "erlpack": "github:hammerandchisel/erlpack",
     "jaro-winkler": "^0.2.8",
-    "jimp": "^0.2.28",
     "node-emoji": "^1.8.1",
     "sharp": "^0.18.2",
     "snekparse": "github:devsnek/snekparse",
@@ -34,12 +32,7 @@
     "uws": "^8.14.0"
   },
   "devDependencies": {
-    "eslint": "^4.3.0",
-    "pkg": "^4.1.3"
+    "eslint": "^4.3.0"
   },
-  "bin": "./src/index.js",
-  "pkg": {
-    "scripts": "./src/**/*.js",
-    "assets": "./assets/*"
-  }
+  "bin": "./src/index.js"
 }

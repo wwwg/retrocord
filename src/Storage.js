@@ -14,7 +14,7 @@ const OS_STORAGE_PATH = getOSStoragePath();
 if (!fs.existsSync(OS_STORAGE_PATH)) {
   fs.mkdirSync(OS_STORAGE_PATH);
   fs.mkdirSync(path.join(OS_STORAGE_PATH, 'files'));
-  fs.mkdirSync(path.join(OS_STORAGE_PATH), '.retrorc');
+  fs.mkdirSync(path.join(OS_STORAGE_PATH, '.retrorc'));
 }
 const STORAGE_PATH = path.join(OS_STORAGE_PATH, 'storage.json');
 

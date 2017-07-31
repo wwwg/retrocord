@@ -6,15 +6,15 @@ class GUI extends EventEmitter {
   constructor(screen) {
     super();
     this.screen = screen;
-    this.chatbox = blessed.box({
+    this.mainbox = blessed.box({
       label: 'retrocord',
       width: '100%',
       height: '100%-1',
       border: { type: 'line' },
     });
 
-    this.consolebox = blessed.log({
-      parent: this.chatbox,
+    this.chatbox = blessed.box({
+      parent: this.mainbox,
       tags: true,
       scrollable: true,
       label: '',
@@ -45,20 +45,23 @@ class GUI extends EventEmitter {
       this.screen.render();
     });
 
-    this.screen.append(this.chatbox);
+    this.screen.append(this.mainbox);
     this.screen.append(this.inputbox);
     this.screen.render();
 
     this.inputbox.focus();
   }
 
-  put(text) {
-    this.consolebox.log(text);
+  put(content) {
+    const element = blessed.box({ content });
+    // element.setContent(content);
+    this.chatbox.append(element);
   }
 
   async putMessages(messages, { mdy = false } = {}) {
     messages = await Promise.all(messages.map((m) => messageElement(m, mdy)));
-    for (const message of messages) this.consolebox.log(message);
+    for (const message of messages) this.chatbox.append(message);
+    this.screen.render();
   }
 
   putMessage(message, opt) {
@@ -81,6 +84,7 @@ const screen = blessed.screen({
   smartCSR: true,
   title: 'retrocord',
   fullUnicode: true,
+  dockBorders: true,
 });
 
 const gui = new GUI(screen);

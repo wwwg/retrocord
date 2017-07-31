@@ -1,3 +1,4 @@
+const blessed = require('blessed');
 const emoji = require('node-emoji');
 const colors = require('ansi-256-colors');
 const timestamp = require('../util/timestamp');
@@ -7,6 +8,12 @@ const shortlink = require('../util/shortlink');
 const Storage = require('../Storage');
 
 async function messageElement(message, mdy = false) {
+  const element = blessed.text();
+  element.setContent(await legacy(message, mdy));
+  return element;
+}
+
+async function legacy(message, mdy) {
   const color = (...x) => {
     if (message.member) {
       let hex = message.member.displayHexColor;
