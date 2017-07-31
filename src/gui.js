@@ -53,9 +53,7 @@ class GUI extends EventEmitter {
   }
 
   put(content) {
-    const element = blessed.box({ content });
-    // element.setContent(content);
-    this.chatbox.append(element);
+    this.chatbox.append(blessed.box({ content, tags: true }));
   }
 
   async putMessages(messages, { mdy = false } = {}) {

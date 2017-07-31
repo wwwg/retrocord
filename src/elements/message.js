@@ -8,9 +8,8 @@ const shortlink = require('../util/shortlink');
 const Storage = require('../Storage');
 
 async function messageElement(message, mdy = false) {
-  const element = blessed.text();
-  element.setContent(await legacy(message, mdy));
-  return element;
+  const content = await legacy(message, mdy);
+  return blessed.text({ content, tags: true });
 }
 
 async function legacy(message, mdy) {
