@@ -4,7 +4,8 @@ const babel = require('babel-core');
 require.extensions['.jsx'] = function jsx(module, filename) {
   const src = fs.readFileSync(filename);
   const { code } = babel.transform(src, {
-    presets: ['es2015', 'stage-0', 'react'],
+    presets: ['react'],
   });
-  return module._compile(code, filename);
+  module._compile(code, filename);
+  module.exports.__babelCompiled = code;
 };

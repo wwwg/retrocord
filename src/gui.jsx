@@ -3,12 +3,26 @@ const React = require('react');
 const { render } = require('react-blessed');
 const blessed = require('blessed');
 
+const MessageElement = require('./Elements/Message.jsx');
+
 const refs = {
   chatbox: null,
   inputbox: null,
 };
 
-class App extends React.Component { // eslint-disable-line no-unused-vars
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { messages: [] };
+
+    const ctx = require('./index');
+    ctx.discord.on('message', () => {
+      const messages = ctx.current && ctx.current.channel ?
+        ctx.current.channel.messages.array() : [];
+      this.setState({ messages });
+    });
+  }
+
   render() {
     return (
       <element>
@@ -21,7 +35,9 @@ class App extends React.Component { // eslint-disable-line no-unused-vars
             alwaysScroll={true}
             mouse={true}
             scrollbar={{ ch: '', inverse: true }}
-            ref={(x) => { refs.chatbox = x; }}></box>
+            ref={(x) => { refs.chatbox = x; }}>
+            {this.state.messages.map((message) => <MessageElement key={message.id} message={message}/>)}
+          </box>
         </box>
         <textbox bottom={0}
           width='100%'

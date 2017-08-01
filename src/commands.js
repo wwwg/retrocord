@@ -63,9 +63,7 @@ module.exports = {
         }
         ctx.gui.put(`{bold}Joining #${channel.name} in ${scope.name}{/bold}`);
       }
-      channel.fetchMessages({ limit: 5 }).then((messages) => {
-        ctx.gui.putMessages(messages.array().reverse(), { mdy: true });
-      });
+      channel.fetchMessages({ limit: 5 });
       ctx.current.channel = channel;
       ctx.current.scope = scope;
     },
@@ -93,7 +91,7 @@ module.exports = {
         .then(async(messages) => {
           ctx.gui.put('{bold}-- BEGIN SEARCH --{/bold}');
           ctx.gui.put(`{bold} Query: ${args.join(' ')}{/bold}`);
-          await ctx.gui.putMessages(messages.reverse(), { mdy: true });
+          // await ctx.gui.putMessages(messages.reverse(), { mdy: true });
           ctx.gui.put('{bold}--- END SEARCH ---{/bold}');
         })
         .catch((err) => {
