@@ -21,7 +21,7 @@ class UserTag extends React.Component {
 UserTag.propTypes = {
   user: PropTypes.object,
   member: PropTypes.object,
-  bold: PropTypes.boolean,
+  bold: PropTypes.bool,
 };
 
 module.exports = UserTag;

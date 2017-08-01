@@ -3,7 +3,7 @@ const React = require('react');
 const { render } = require('react-blessed');
 const blessed = require('blessed');
 
-const MessageElement = require('./Elements/Message.jsx');
+const MessageElement = require('./elements/Message.jsx');
 
 const refs = {
   chatbox: null,
