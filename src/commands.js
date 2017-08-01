@@ -45,7 +45,7 @@ module.exports = {
           scope.channels
             .filter((c) => c.type === 'text')
             .find((c) => c.name.toLowerCase() === channel.toLowerCase()) :
-          scope.defaultChannel;
+          scope._sortedChannels().filter((c) => c.permissionsFor(ctx.discord.user).has('READ_MESSAGES')).first();
       }
       if (!channel) return ctx.gui.put('{bold}Invalid Channel{/bold}');
       if (channel.recipient || channel.recipients) {
