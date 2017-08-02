@@ -1,7 +1,5 @@
 const React = require('react');
-const PropTypes = require('prop-types');
-const UserTag = require('./UserTag');
-
+const UserTag = require('../components/UserTag.jsx');
 const {
   // EVERYONE_PATTERN,
   USERS_PATTERN,
@@ -9,36 +7,7 @@ const {
   ROLES_PATTERN,
 } = require('discord.js').MessageMentions;
 
-class MessageContent extends React.Component {
-  constructor(props) {
-    super(props);
-    const message = this.props.message;
-    this.items = makeItems(message);
-    this.mentionsClient = message.mentions.has(message.client.user);
-    if (this.mentionsClient) process.stdout.write('\x07');
-  }
-
-  render() {
-    const prefix = this.mentionsClient ? '{yellow-bg}{black-fg}' : '';
-    const suffix = this.mentionsClient ? '{/black-fg}{/yellow-bg}' : '';
-    return (
-      <element>
-        <box>{prefix}</box>
-        {this.items.map((item, i) => {
-          if (item.isValidElement) return item;
-          return <box key={i} tags={!!item.style} style={item.style || {}}>{item.content ? item.content : item}</box>;
-        })}
-        <box>{suffix}</box>
-      </element>
-    );
-  }
-}
-
-MessageContent.propTypes = {
-  message: PropTypes.object.isRequired,
-};
-
-function makeItems(message) {
+function parseMessage(message) {
   const client = message.client;
   const authorTag = React.createElement(UserTag, {
     user: message.author,
@@ -130,4 +99,4 @@ function makeItems(message) {
   }
 }
 
-module.exports = MessageContent;
+module.exports = parseMessage;

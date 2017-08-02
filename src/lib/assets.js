@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ASSET_DIR = path.join(__dirname, '..', 'assets');
+const ASSET_DIR = path.join(__dirname, '../..', 'assets');
 
 const files = fs.readdirSync(ASSET_DIR);
 for (const file of files) {

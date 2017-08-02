@@ -1,4 +1,5 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 const lp = require('../util/lp');
 
 function timestamp(d = new Date(), date = false) {
@@ -18,8 +19,14 @@ class Timestamp extends React.Component {
     const t = this.props.timestamp;
     const date = typeof this.props.mdy !== 'undefined' ? this.props.mdy :
       new Date() - t > 86400000;
-    return <box tags={true}>{timestamp(t, date)}</box>;
+    return <box tags={true} style={this.props.style}>{timestamp(t, date)}</box>;
   }
 }
+
+Timestamp.propTypes = {
+  timestamp: PropTypes.instanceOf(Date).isRequired,
+  mdy: PropTypes.bool,
+  style: PropTypes.object,
+};
 
 module.exports = Timestamp;
