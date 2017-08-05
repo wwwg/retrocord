@@ -8,12 +8,13 @@ require('./discord');
 
 const screen = blessed.screen({
   title: 'retrocord',
-  autoPadding: true,
+  // autoPadding: true,
   smartCSR: true,
   dockBorders: true,
   fullUnicode: true,
 });
 
-screen.append(new App());
+const app = new App();
 
+screen.append(app);
 screen.render();

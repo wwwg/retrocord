@@ -3,7 +3,7 @@ const blessed = require('blessed');
 const Asset = require('./Asset');
 const Text = require('./Text');
 const Input = require('./Input');
-// const Channel = require('./Channel');
+const Channel = require('./Channel');
 
 const Storage = require('../Storage');
 
@@ -23,7 +23,7 @@ function App() {
       new Text({ content: '{bold}Logging in...{/bold}' }),
     ]);
   } else {
-    return wrapper();
+    return wrapper([new Channel()]);
   }
 }
 

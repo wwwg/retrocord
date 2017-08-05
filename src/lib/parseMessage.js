@@ -1,4 +1,4 @@
-const UserTag = require('../components/UserTag');
+const UserTag = require('../elements/UserTag');
 const {
   // EVERYONE_PATTERN,
   USERS_PATTERN,
