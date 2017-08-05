@@ -1,12 +1,15 @@
-const lp = (v, n, c = '0') => String(v).length >= n ? `${v}` : (String(c).repeat(n) + v).slice(-n);
+const lp = require('./lp');
 
-function timestamp(d = new Date(), mdy = false) {
-  // eslint-disable-next-line max-len
-  return `${mdy ? `${lp(d.getFullYear().toString(), 2)}-${lp((d.getMonth() + 1).toString(), 2)}-${lp(d.getDate().toString(), 2)} ` : ''}
-${lp(d.getHours().toString(), 2)}:
-${lp(d.getMinutes().toString(), 2)}:
-${lp(d.getSeconds().toString(), 2)}
-`.replace(/\n/g, '');
+function timestamp(d = new Date(), date = false) {
+  if (typeof d === 'boolean') {
+    date = d;
+    d = new Date();
+  }
+  const time = `${lp(d.getHours(), 2)}:${lp(d.getMinutes(), 2)}:${lp(d.getSeconds(), 2)}`;
+  if (date) {
+    return `${lp(d.getFullYear(), 2)}-${lp((d.getMonth() + 1).toString(), 2)}-${lp(d.getDate(), 2)} ${time}`;
+  }
+  return time;
 }
 
 module.exports = timestamp;

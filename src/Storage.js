@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
-const SCOPE = discord.client.options.http.api;
+const SCOPE = discord.options.http.api;
 
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
@@ -14,7 +14,7 @@ const OS_STORAGE_PATH = getOSStoragePath();
 if (!fs.existsSync(OS_STORAGE_PATH)) {
   fs.mkdirSync(OS_STORAGE_PATH);
   fs.mkdirSync(path.join(OS_STORAGE_PATH, 'files'));
-  fs.mkdirSync(path.join(OS_STORAGE_PATH), '.retrorc');
+  fs.mkdirSync(path.join(OS_STORAGE_PATH, '.retrorc'));
 }
 const STORAGE_PATH = path.join(OS_STORAGE_PATH, 'storage.json');
 
