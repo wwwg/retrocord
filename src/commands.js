@@ -29,6 +29,9 @@ module.exports = {
     },
   },
   join: {
+    aliases: [
+      'j'
+    ],
     run: async(ctx, args) => {
       const SPLIT_RE = /@|#/;
       let [scope, channel] = args.join(' ').split(SPLIT_RE).map((x) => x.trim());
