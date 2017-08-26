@@ -39,7 +39,9 @@ gui.on('input', (message) => {
   const prefix = ':';
   if (message.startsWith(prefix)) {
     const [command, ...args] = message.slice(prefix.length).split(' ');
-    if (command in commands) commands[command].run(ctx, snekparse(args));
+    if (commands[command]) {
+      commands[command].run(ctx, snekparse(args));
+    }
   } else {
     if (!ctx.allowInput) return;
     const args = message.split(' ');
@@ -104,6 +106,7 @@ fs.stat(tokenFile, (err, stats) => {
         throw err;
         return;
       } else {
+        ctx.token = data;
         discord.run(ctx);
       }
     });

@@ -1,13 +1,5 @@
-const Discord = require('discord.js');
-const ctx = require('./ctx');
-
-const client = new Discord.Client({
-  http: process.snekv ? {
-    api: process.snekv.api,
-    cdn: process.snekv.cdn,
-    invite: process.snekv.invites,
-  } : undefined,
-});
+const Discord = require('discord.js'),
+  client = new Discord.Client;
 
 client.run = ctx => {
   client.on('ready', () => {
