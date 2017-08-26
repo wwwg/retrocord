@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint -c ./.eslintrc.json src",
     "build": "pkg ./package.json --out-path=./build",
-    "full": "npm run lint && npm run build"
+    "full": "npm run lint && npm run build",
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
