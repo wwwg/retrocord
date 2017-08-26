@@ -20,8 +20,19 @@ const ctx = {
   },
   rc: Storage.rc,
 };
-
-module.exports = ctx;
+let getEmojis = () => {
+  if (ctx.discord.user && ctx.discord.user.premium) {
+    return ctx.discord.emojis;
+  } else if (ctx.current.scope && ctx.current.scope !== 'dm') {
+    return ctx.current.scope.emojis;
+  } else {
+    return [];
+  }
+}
+let onErr = e => {
+  ctx.gui.put(`{red-fg}{bold}Unhandled Error (You should report this){/bold}{/red-fg}\n${e.stack}
+  {red-fg}{bold}-- End Error --{/bold}{/red-fg}`);
+}
 
 gui.on('input', (message) => {
   if (!message.length) return;
@@ -80,20 +91,6 @@ if (Storage.has('token')) {
   if (!Storage.has('completed_login')) gui.put('{bold}Use the login command{/bold} (/login <token>)');
 }
 
-function getEmojis() {
-  if (ctx.discord.user && ctx.discord.user.premium) {
-    return ctx.discord.emojis;
-  } else if (ctx.current.scope && ctx.current.scope !== 'dm') {
-    return ctx.current.scope.emojis;
-  } else {
-    return [];
-  }
-}
-
-process.on('unhandledRejection', handleError);
-process.on('uncaughtException', handleError);
-
-function handleError(e) {
-  ctx.gui.put(`{red-fg}{bold}Unhandled Error (You should report this){/bold}{/red-fg}\n${e.stack}
- {red-fg}{bold}-- End Error --{/bold}{/red-fg}`);
-}
+process.on('unhandledRejection', onErr);
+process.on('uncaughtException', onErr);
+module.exports = ctx;
