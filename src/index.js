@@ -36,9 +36,8 @@ const emoji = require('node-emoji'),
 
 gui.on('input', (message) => {
   if (message.length == 0) return;
-  const prefix = ':';
-  if (message.startsWith(prefix)) {
-    const [command, ...args] = message.slice(prefix.length).split(' ');
+  if (message.startsWith(':')) {
+    const [command, ...args] = message.slice(1).split(' ');
     if (commands[command]) {
       commands[command].run(ctx, snekparse(args));
     }
