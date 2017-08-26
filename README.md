@@ -1,6 +1,10 @@
 # Retrocord Light
 
-A fork of RetroCord with various fixes and improvements
+Discord CLI client written in JavaScript.<br>
+To install on Linux and Mac, make sure you have node and installed, and enter this command in your favorite terminal software:<br>
+```sh
+curl https://raw.githubusercontent.com/wwwg/retrocord-light/master/nix-install.sh | bash
+```
 
 ## Features
 - Cool Commands
