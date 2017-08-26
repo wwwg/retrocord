@@ -3,7 +3,10 @@ const parseMessage = require('../lib/parseMessage');
 
 function MessageContent(message) {
   const items = parseMessage(message);
-  const mentionsClient = (message.mentions.members === null ? false : message.mentions.members.array().includes(message.client.user));
+  var mentionsClient = false;
+  if (message.mentions.members) {
+    mentionsClient = message.mentions.members.array().includes(message.client.user);
+  }
   if (mentionsClient) process.stdout.write('\x07');
   return blessed.element({
     children: items.map((item) =>
