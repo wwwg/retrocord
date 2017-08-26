@@ -11,7 +11,7 @@ const discord = require('./discord');
 const lookup = require('./util/lookup');
 
 const ctx = {
-  gui,
+  gui: gui,
   discord: discord.client,
   allowInput: false,
   current: {
@@ -36,7 +36,7 @@ let onErr = e => {
 
 gui.on('input', (message) => {
   if (!message.length) return;
-  const prefix = ctx.rc.prefix || '/';
+  const prefix = ':';
   if (message.startsWith(prefix)) {
     const [command, ...args] = message.slice(prefix.length).split(' ');
     if (command in commands) commands[command].run(ctx, snekparse(args));
