@@ -1,6 +1,6 @@
 # Download and install required files
-git clone https://github.com/wwwg/retrocord.git
-cd retrocord
+git clone https://github.com/wwwg/retrocord-light.git
+cd retrocord-light
 npm i
 # Lint and build
 npm run lint
