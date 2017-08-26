@@ -7,12 +7,11 @@ const emoji = require('node-emoji');
 const Storage = require('./Storage');
 const gui = require('./gui');
 const commands = require('./commands');
-const assets = require('./lib/assets');
 const discord = require('./discord');
 const lookup = require('./util/lookup');
 
 const ctx = {
-  gui, assets,
+  gui,
   discord: discord.client,
   allowInput: false,
   current: {
