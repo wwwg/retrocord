@@ -36,6 +36,8 @@ module.exports = {
       // ctx.gui.put(JSON.stringify(args));
       const SPLIT_RE = /@|#/;
       let [scope, channel] = args.join(' ').split(SPLIT_RE).map((x) => x.trim());
+      ctx.gui.put("scope: " + scope);
+      ctx.gui.put("Channel: " + channel);
       if (channel) channel = channel.toLowerCase();
       if (scope === 'dm') {
         const query = channel;
@@ -87,7 +89,7 @@ module.exports = {
     run: (ctx, args) => {
       var _args = [
         'dm',
-        args[0]
+        ('@' + args[0])
       ];
       module.exports.join.run(ctx, _args);
     }
