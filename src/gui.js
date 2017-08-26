@@ -58,7 +58,9 @@ class GUI extends EventEmitter {
 
   async putMessages(messages, { mdy = false } = {}) {
     messages = await Promise.all(messages.map((m) => messageElement(m, mdy)));
-    for (const message of messages) this.consolebox.log(message);
+    for (var i = 0; i < messages.length; ++i) {
+      this.consolebox.log(messages[i]);
+    }
   }
 
   putMessage(message, opt) {
