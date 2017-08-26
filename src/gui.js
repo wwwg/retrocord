@@ -1,6 +1,6 @@
 const EventEmitter = require('events');
 const blessed = require('blessed');
-const messageElement = require('./elements/message');
+const messageElement = require('./elements/Message');
 
 class GUI extends EventEmitter {
   constructor(screen) {
