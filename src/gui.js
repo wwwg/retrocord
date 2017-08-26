@@ -7,7 +7,7 @@ class GUI extends EventEmitter {
     super();
     this.screen = screen;
     this.chatbox = blessed.box({
-      label: 'retrocord',
+      label: 'Retrocord Light',
       width: '100%',
       height: '100%-1',
       border: { type: 'line' },
