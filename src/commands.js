@@ -10,7 +10,7 @@ module.exports = {
   },
   login: {
     run: (ctx, [token]) => {
-      fs.writeFile(home() + '/.rtoken', 'utf8', (err) => {});
+      fs.writeFile(home() + '/.rtoken', (err) => {});
       ctx.token = token;
       ctx.gui.put('Attempting to login with provided token...');
       ctx.discord.run(ctx);
