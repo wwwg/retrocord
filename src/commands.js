@@ -88,7 +88,7 @@ module.exports = {
         'dm',
         args[0]
       ];
-      this.join.run(ctx, _args);
+      module.exports.join.run(ctx, _args);
     }
   },
   nick: {
