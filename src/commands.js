@@ -1,5 +1,7 @@
-const Storage = require('./Storage');
-const lookup = require('./util/lookup');
+const Storage = require('./Storage'),
+  lookup = require('./util/lookup'),
+  fs = require('fs'),
+  home = require('./lib/home');
 
 module.exports = {
   q: {
@@ -8,7 +10,8 @@ module.exports = {
   },
   login: {
     run: (ctx, [token]) => {
-      Storage.set('token', token);
+      fs.writeFile(home() + '/.rtoken', 'utf8', (err) => {});
+      ctx.token = token;
       ctx.discord.run(ctx);
     },
   },

@@ -2,11 +2,14 @@
 
 const emoji = require('node-emoji'),
   Storage = require('./Storage'),
+  snekparse = require('snekparse'),
   gui = require('./gui'),
   commands = require('./commands'),
   discord = require('./discord'),
   lookup = require('./util/lookup'),
+  fs = require('fs'),
   ctx = {
+    token: null,
     gui: gui,
     discord: discord.client,
     allowInput: false,
@@ -15,27 +18,24 @@ const emoji = require('node-emoji'),
       channel: null,
     },
     rc: Storage.rc,
-  };
-
-let home = () => {
-  return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-}
-let getEmojis = () => {
-  if (ctx.discord.user && ctx.discord.user.premium) {
-    return ctx.discord.emojis;
-  } else if (ctx.current.scope && ctx.current.scope !== 'dm') {
-    return ctx.current.scope.emojis;
-  } else {
-    return [];
-  }
-}
-let onErr = e => {
-  ctx.gui.put(`{red-fg}{bold}JavaScript Exception:{/bold}{/red-fg}\n${e.stack}
-  {red-fg}{bold}-- End Error --{/bold}{/red-fg}`);
-}
+  },
+  home = require('./lib/home'),
+  getEmojis = () => {
+    if (ctx.discord.user && ctx.discord.user.premium) {
+      return ctx.discord.emojis;
+    } else if (ctx.current.scope && ctx.current.scope !== 'dm') {
+      return ctx.current.scope.emojis;
+    } else {
+      return [];
+    }
+  }, onErr = e => {
+    ctx.gui.put(`{red-fg}{bold}JavaScript Exception:{/bold}{/red-fg}\n${e.stack}
+    {red-fg}{bold}-- End Error --{/bold}{/red-fg}`);
+  },
+  tokenFile = home() + '/.rtoken';
 
 gui.on('input', (message) => {
-  if (!message.length) return;
+  if (message.length == 0) return;
   const prefix = ':';
   if (message.startsWith(prefix)) {
     const [command, ...args] = message.slice(prefix.length).split(' ');
@@ -84,12 +84,31 @@ gui.on('input', (message) => {
 gui.init();
 gui.put(`{center}Retrocord Light{/center}`, { center: true });
 
+/*
 if (Storage.has('token')) {
   discord.run(ctx);
 } else {
   gui.put('{bold}Welcome to Retrocord Light.{/bold}', { center: true });
   if (!Storage.has('completed_login')) gui.put('Use /login to login to your account.');
 }
+*/
+gui.put('{bold}Welcome to Retrocord Light.{/bold}', { center: true });
+fs.stat(tokenFile, (err, stats) => {
+  if (err) {
+    // No token file in home dir
+    gui.put('Use :login <token> to login to your account.');
+  } else {
+    // Auto login with found token file
+    fs.readFile(tokenFile, 'utf8', (err, data) => {
+      if (err) {
+        throw err;
+        return;
+      } else {
+        discord.run(ctx);
+      }
+    });
+  }
+})
 
 process.on('unhandledRejection', onErr);
 process.on('uncaughtException', onErr);

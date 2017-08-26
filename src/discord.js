@@ -9,8 +9,7 @@ const client = new Discord.Client({
   } : undefined,
 });
 
-function run() {
-  const Storage = require('./Storage');
+client.run = ctx => {
   client.on('ready', () => {
     if (client.user.bot) {
       Storage.delete('token');
@@ -21,14 +20,11 @@ function run() {
     }
   });
 
-  client.login(Storage.get('token'))
-    .catch(() => {
-      Storage.delete('token');
-      // ctx.gui.put(`{bold}Incorrect Token!{/bold} (${err.message})`);
+  client.login(ctx.token)
+    .catch(e => {
+      ctx.gui.put(`{bold}Token login error.{/bold} (${e.message})`);
     });
 }
-
-client.run = run;
 
 process.nextTick(() => {
   const Storage = require('./Storage');
