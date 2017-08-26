@@ -78,8 +78,10 @@ module.exports = {
         }
         ctx.gui.put(`{bold}Joining #${channel.name} in ${scope.name}{/bold}`);
       }
-      channel.fetchMessages({ limit: 5 }).then((messages) => {
-        ctx.gui.putMessages(messages.array().reverse(), { mdy: true });
+      channel.fetchMessages({
+        limit: 5
+      }).then(msgs => {
+        ctx.gui.putMessages(msgs.array().reverse(), { mdy: true });
       });
       ctx.current.channel = channel;
       ctx.current.scope = scope;
