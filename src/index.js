@@ -8,6 +8,7 @@ const emoji = require('node-emoji'),
   lookup = require('./util/lookup'),
   fs = require('fs'),
   home = require('./lib/home'),
+  EventEmitter = require('events'),
   getEmojis = () => {
     if (ctx.discord.user && ctx.discord.user.premium) {
       return ctx.discord.emojis;
@@ -22,8 +23,9 @@ const emoji = require('node-emoji'),
   },
   tokenFile = home() + '/.rtoken';
 
-class Context {
+class Context extends EventEmitter {
   constructor(gui) {
+    super();
     this.gui = gui;
     this.discord = require('./discord');
     this.allowInput = false;
