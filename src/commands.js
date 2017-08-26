@@ -82,6 +82,15 @@ module.exports = {
       ctx.current.scope = scope;
     },
   },
+  dm: {
+    run: (ctx, args) => {
+      var _args = [
+        'dm',
+        args[0]
+      ];
+      this.join.run(ctx, _args);
+    }
+  },
   nick: {
     aliases: ['nickname'],
     run: (ctx, args) => {
