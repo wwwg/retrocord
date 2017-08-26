@@ -20,7 +20,7 @@
   "homepage": "https://github.com/devsnek/retrocord#readme",
   "dependencies": {
     "ansi-256-colors": "^1.1.0",
-    "blessed": "github:devsnek/blessed",
+    "blessed": "*",
     "chalk": "^2.0.1",
     "discord.js": "github:hydrabolt/discord.js",
     "emoji-regex": "^6.5.1",
