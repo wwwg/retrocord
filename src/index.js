@@ -95,12 +95,14 @@ fs.stat(tokenFile, (err, stats) => {
     gui.put('Use :login <token> to login to your account.');
   } else {
     // Auto login with found token file
+    gui.put("Reading cached token...");
     fs.readFile(tokenFile, 'utf8', (err, data) => {
       if (err) {
         throw err;
         return;
       } else {
         ctx.token = data;
+        gui.put("Got token. Logging in...");
         ctx.discord.run(ctx);
       }
     });
