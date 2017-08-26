@@ -19,6 +19,7 @@ curl https://raw.githubusercontent.com/wwwg/retrocord-light/master/nix-install.s
 - Smart mentions with support for mentioning impossible-to-mention unicode usernames
 
 ## Commands
+Commands are similiar to how vim handles commands, prefix each of these with a `:` to use them
 
 - `login <token>` - login to the client
 - `logout` - log the client out
@@ -33,5 +34,4 @@ curl https://raw.githubusercontent.com/wwwg/retrocord-light/master/nix-install.s
 - `tableflip [...text]` - discord-client-style tableflip
 - `game [...text]` - set your current game
 - `nick [...text]` - set your nick in the current guild, if in one
-- `set <name> [value]` - set a setting in your `.retrorc`
 - `q/quit/exit` - exit the client
