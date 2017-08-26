@@ -30,7 +30,7 @@ let getEmojis = () => {
   }
 }
 let onErr = e => {
-  ctx.gui.put(`{red-fg}{bold}Unhandled Error (You should report this){/bold}{/red-fg}\n${e.stack}
+  ctx.gui.put(`{red-fg}{bold}JavaScript Exception:{/bold}{/red-fg}\n${e.stack}
   {red-fg}{bold}-- End Error --{/bold}{/red-fg}`);
 }
 
