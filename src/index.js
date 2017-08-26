@@ -87,8 +87,8 @@ gui.put(`{center}Retrocord Light{/center}`, { center: true });
 if (Storage.has('token')) {
   discord.run(ctx);
 } else {
-  gui.put('{bold}Please Login!{/bold}', { center: true });
-  if (!Storage.has('completed_login')) gui.put('{bold}Use the login command{/bold} (/login <token>)');
+  gui.put('{bold}Welcome to Retrocord Light.{/bold}', { center: true });
+  if (!Storage.has('completed_login')) gui.put('Use /login to login to your account.');
 }
 
 process.on('unhandledRejection', onErr);
