@@ -1,7 +1,7 @@
 const blessed = require('blessed');
 const parseMessage = require('../lib/parseMessage');
 
-function MessageContent({ message }) {
+function MessageContent(message) {
   const items = parseMessage(message);
   const mentionsClient = message.mentions.has(message.client.user);
   if (mentionsClient) process.stdout.write('\x07');

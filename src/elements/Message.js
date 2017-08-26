@@ -4,7 +4,7 @@ const Timestamp = require('./Timestamp');
 const UserTag = require('./UserTag');
 const MessageContent = require('./MessageContent');
 
-function Message({ message }) {
+function Message(message) {
   if (message.type === 'DEFAULT') {
     return blessed.element({
       children: [

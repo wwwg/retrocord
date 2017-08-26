@@ -2,7 +2,12 @@ const blessed = require('blessed');
 
 function UserTag(props) {
   const member = props.member;
-  const user = member ? member.user : props.user;
+  var user;
+  if (member) {
+    user = member.user;
+  } else {
+    user = props.user;
+  }
   const color = (() => {
     if (member) {
       let hex = member.displayHexColor;
