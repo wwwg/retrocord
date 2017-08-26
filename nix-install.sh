@@ -5,6 +5,4 @@ npm i
 # Lint and build
 npm run lint
 npm run build
-# Run
-echo "retrocord is installed. running.."
-npm start
+echo -n "\n\nInstalled Retrocord light. Run with 'npm start'\n"
