@@ -72,7 +72,7 @@ gui.on('input', (message) => {
 });
 
 gui.init();
-gui.put(`{center}${assets.logo}{/center}`, { center: true });
+gui.put(`{center}Retrocord Light{/center}`, { center: true });
 
 if (Storage.has('token')) {
   discord.run(ctx);
