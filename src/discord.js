@@ -14,7 +14,7 @@ client.run = ctx => {
 
   client.login(ctx.token)
     .catch(e => {
-      ctx.gui.put(`{bold}Token login error.{/bold} (${e.message})`);
+      ctx.gui.put(`{bold}Login error{/bold} (${e.message})`);
     });
 }
 

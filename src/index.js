@@ -11,7 +11,7 @@ const emoji = require('node-emoji'),
   ctx = {
     token: null,
     gui: gui,
-    discord: discord.client,
+    discord: discord,
     allowInput: false,
     current: {
       scope: null,
