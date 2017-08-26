@@ -33,6 +33,7 @@ module.exports = {
       'j'
     ],
     run: async(ctx, args) => {
+      // ctx.gui.put(JSON.stringify(args));
       const SPLIT_RE = /@|#/;
       let [scope, channel] = args.join(' ').split(SPLIT_RE).map((x) => x.trim());
       if (channel) channel = channel.toLowerCase();

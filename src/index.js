@@ -107,8 +107,11 @@ fs.stat(tokenFile, (err, stats) => {
       }
     });
   }
-})
+});
 
+// Handle errors
 process.on('unhandledRejection', onErr);
 process.on('uncaughtException', onErr);
+// Export context
+global.ctx = ctx;
 module.exports = ctx;
