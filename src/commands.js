@@ -12,6 +12,7 @@ module.exports = {
     run: (ctx, [token]) => {
       fs.writeFile(home() + '/.rtoken', 'utf8', (err) => {});
       ctx.token = token;
+      ctx.gui.put('Attempting to login with provided token...');
       ctx.discord.run(ctx);
     },
   },

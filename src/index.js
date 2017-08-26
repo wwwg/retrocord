@@ -5,20 +5,8 @@ const emoji = require('node-emoji'),
   snekparse = require('snekparse'),
   gui = require('./gui'),
   commands = require('./commands'),
-  discord = require('./discord'),
   lookup = require('./util/lookup'),
   fs = require('fs'),
-  ctx = {
-    token: null,
-    gui: gui,
-    discord: discord,
-    allowInput: false,
-    current: {
-      scope: null,
-      channel: null,
-    },
-    rc: Storage.rc,
-  },
   home = require('./lib/home'),
   getEmojis = () => {
     if (ctx.discord.user && ctx.discord.user.premium) {
@@ -33,6 +21,19 @@ const emoji = require('node-emoji'),
     {red-fg}{bold}-- End Error --{/bold}{/red-fg}`);
   },
   tokenFile = home() + '/.rtoken';
+
+class Context {
+  constructor(gui) {
+    this.gui = gui;
+    this.discord = require('./discord');
+    this.allowInput = false;
+    this.current = {
+      scope: null,
+      channel: null,
+    };
+  }
+}
+const ctx = new Context(gui);
 
 gui.on('input', (message) => {
   if (message.length == 0) return;
@@ -84,16 +85,8 @@ gui.on('input', (message) => {
 
 gui.init();
 gui.put(`{center}Retrocord Light{/center}`, { center: true });
-
-/*
-if (Storage.has('token')) {
-  discord.run(ctx);
-} else {
-  gui.put('{bold}Welcome to Retrocord Light.{/bold}', { center: true });
-  if (!Storage.has('completed_login')) gui.put('Use /login to login to your account.');
-}
-*/
 gui.put('{bold}Welcome to Retrocord Light.{/bold}', { center: true });
+
 fs.stat(tokenFile, (err, stats) => {
   if (err) {
     // No token file in home dir
@@ -106,7 +99,7 @@ fs.stat(tokenFile, (err, stats) => {
         return;
       } else {
         ctx.token = data;
-        discord.run(ctx);
+        ctx.discord.run(ctx);
       }
     });
   }
