@@ -10,7 +10,7 @@ function Message(message) {
       children: [
         new Timestamp({ date: message.createdAt }),
         new UserTag({ member: message.member, user: message.author }),
-        new MessageContent({ message }),
+        new MessageContent(message),
       ],
     });
   }
