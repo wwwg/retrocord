@@ -5,7 +5,7 @@ const Storage = require('./Storage'),
 
 module.exports = {
   q: {
-    aliases: ['quit', 'exit'],
+    aliases: ['quit', 'exit', "q!"],
     run: () => process.exit(0),
   },
   login: {
