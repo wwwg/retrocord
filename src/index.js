@@ -1,25 +1,25 @@
 #!/usr/bin/env node
 
-const snekparse = require('snekparse');
-process.snekv = snekparse(process.argv);
+const emoji = require('node-emoji'),
+  Storage = require('./Storage'),
+  gui = require('./gui'),
+  commands = require('./commands'),
+  discord = require('./discord'),
+  lookup = require('./util/lookup'),
+  ctx = {
+    gui: gui,
+    discord: discord.client,
+    allowInput: false,
+    current: {
+      scope: null,
+      channel: null,
+    },
+    rc: Storage.rc,
+  };
 
-const emoji = require('node-emoji');
-const Storage = require('./Storage');
-const gui = require('./gui');
-const commands = require('./commands');
-const discord = require('./discord');
-const lookup = require('./util/lookup');
-
-const ctx = {
-  gui: gui,
-  discord: discord.client,
-  allowInput: false,
-  current: {
-    scope: null,
-    channel: null,
-  },
-  rc: Storage.rc,
-};
+let home = () => {
+  return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+}
 let getEmojis = () => {
   if (ctx.discord.user && ctx.discord.user.premium) {
     return ctx.discord.emojis;
