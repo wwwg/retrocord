@@ -7,4 +7,4 @@ npm run lint
 npm run build
 # Run
 echo "retrocord is installed. running.."
-node src/index.js
+npm start
