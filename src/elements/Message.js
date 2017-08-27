@@ -8,12 +8,12 @@ function Message(message) {
   if (message.type === 'DEFAULT') {
     return blessed.element({
       children: [
-        new Timestamp(message.createdAt),
-        new UserTag({
+        Timestamp(message.createdAt),
+        UserTag({
             member: message.member,
             user: message.author
           }),
-        new MessageContent(message),
+        MessageContent(message),
       ],
     });
   }
