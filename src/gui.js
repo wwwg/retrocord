@@ -58,7 +58,7 @@ class GUI extends EventEmitter {
     const me = this;
     messages.forEach(m => {
       const ts = timestamp(m.createdAt),
-        txt = `{yellow-fg}{bold}${ts}{/bold}{/yellow-fg} {red-fg}${m.author.username}{/red-fg} : ${m.content}`;
+        txt = `{yellow-fg}{bold}${ts}{/bold}{/yellow-fg} {white-fg}{bold}${m.author.username}{/bold}{/white-fg} : ${m.content}`;
       me.put(txt);
     });
   }
