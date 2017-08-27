@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const emoji = require('node-emoji'),
-  Storage = require('./Storage'),
   snekparse = require('snekparse'),
   gui = require('./gui'),
   commands = require('./commands'),

@@ -1,5 +1,4 @@
-const Storage = require('./Storage'),
-  lookup = require('./util/lookup'),
+const lookup = require('./util/lookup'),
   fs = require('fs'),
   home = require('./lib/home');
 
@@ -23,7 +22,6 @@ module.exports = {
   },
   logout: {
     run: (ctx) => {
-      Storage.delete('token');
       ctx.discord.ws.destroy();
       ctx.gui.put('{bold}Logged Out!{/bold}');
     },
@@ -67,11 +65,10 @@ module.exports = {
           ctx.gui.put(`{bold}Loading DM with {white-fg}${channel.recipient.tag}{/white-fg}...{/bold}`);
         }
       } else {
-        if (channel.nsfw && !(Storage.get('nsfw_store') || []).includes(scope.id)) {
+        if (channel.nsfw) {
           // eslint-disable-next-line max-len
           const answer = await ctx.gui.awaitResponse('{bold}You must be at least eighteen years old to view this channel. Are you over eighteen and willing to see adult content?{/bold} (respond with yes/no)');
           if (!['yes', 'y'].includes(answer.toLowerCase())) return;
-          Storage.set('nsfw_store', (Storage.get('nsfw_store') || []).concat(scope.id));
         }
         ctx.gui.put(`{bold}Loading channel {white-fg}#${channel.name}{/white-fg} in {white-fg}${scope.name}{/white-fg}{/bold}...`);
       }
