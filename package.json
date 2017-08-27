@@ -12,28 +12,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devsnek/retrocord.git"
+    "url": "git+https://github.com/wwwg/retrocord-light.git"
   },
   "author": "wwwg",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/devsnek/retrocord/issues"
+    "url": "https://github.com/wwwg/retrocord-light/issues"
   },
   "homepage": "https://github.com/devsnek/retrocord#readme",
   "dependencies": {
-    "ansi-256-colors": "^1.1.0",
     "blessed": "*",
-    "chalk": "^2.0.1",
     "discord.js": "*",
     "emoji-regex": "^6.5.1",
-    "erlpack": "github:hammerandchisel/erlpack",
-    "jaro-winkler": "^0.2.8",
-    "jimp": "^0.2.28",
     "node-emoji": "^1.8.1",
-    "sharp": "^0.18.2",
     "snekparse": "github:devsnek/snekparse",
     "tinyint": "^1.0.0",
-    "uws": "^8.14.0"
+    "uws": "^8.14.0",
+    "jaro-winkler": "*"
   },
   "devDependencies": {
     "eslint": "^4.3.0",
