@@ -76,7 +76,7 @@ module.exports = {
         ctx.gui.put(`{bold}Loading channel {white-fg}#${channel.name}{/white-fg} in {white-fg}${scope.name}{/white-fg}{/bold}...`);
       }
       channel.fetchMessages({
-        limit: 25
+        limit: 40
       }).then(msgs => {
         ctx.gui.putMessages(msgs.array().reverse(), { mdy: true });
       });
