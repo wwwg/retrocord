@@ -14,7 +14,15 @@ client.run = ctx => {
     if (ctx.current.channel && msg.channel.id === ctx.current.channel.id) {
       ctx.gui.putMessage(msg);
     }
-  })
+  }).on('typingStart', (channel, user) => {
+    if (ctx.current.channel && channel.id === ctx.current.channel.id) {
+      ctx.gui.putTypingStart(channel, user);
+    }
+  }).on('typingStop', (channel, user) => {
+    if (ctx.current.channel && channel.id === ctx.current.channel.id) {
+      ctx.gui.putTypingStop(channel, user);
+    }
+  });
   client.login(ctx.token)
     .catch(e => {
       ctx.gui.put(`{bold}Login error:{/bold} ${e.message}.`);
