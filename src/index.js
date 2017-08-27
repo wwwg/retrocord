@@ -28,7 +28,7 @@ class Context extends EventEmitter {
     super();
     this.gui = gui;
     this.discord = require('./discord');
-    this.allowInput = false;
+    this.allowInput = true;
     this.current = {
       scope: null,
       channel: null,
