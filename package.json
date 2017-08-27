@@ -7,13 +7,14 @@
     "lint": "eslint -c ./.eslintrc.json src",
     "build": "pkg ./package.json --out-path=./build",
     "full": "npm run lint && npm run build",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "install-nix": "sudo bash install.sh"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devsnek/retrocord.git"
   },
-  "author": "snek <me@gus.host>",
+  "author": "wwwg",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/devsnek/retrocord/issues"
