@@ -4,4 +4,4 @@ cd retrocord-light
 sudo npm -i -g i
 # install
 npm run install-nix
-echo -n "\n\nInstalled Retrocord light. Run with 'npm start'\n"
+echo -n "Installed Retrocord light."
