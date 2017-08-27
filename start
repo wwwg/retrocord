@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Start script for lazy people like me
+node src/index.js
