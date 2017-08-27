@@ -155,6 +155,31 @@ module.exports = {
       ctx.gui.put(ctx.current.scope.channels.filter((c) => c.type === 'text').map((g) => g.name).join(', '));
     },
   },
+  eval: {
+    aliases: [
+      'evl',
+      'e',
+      'ev'
+    ],
+    run: (ctx, args) => {
+      const cmd = args.join(' ');
+      ctx.gui.put(`{white-fg}{bold}eval>{/bold}{/white-fg} {yellow-fg}{bold}${cmd}{/bold}{/yellow-fg}`);
+      var res, success = true;
+      try {
+        res = eval(cmd);
+      } catch (e) {
+        success = false;
+        res = e.toString();
+      }
+      var out = '{white-fg}{bold}result:{/bold}{/white-fg} ';
+      if (success) {
+        out += `{blue-fg}{bold}${res}{/bold}{/blue-fg}`;
+      } else {
+        out += `{red-fg}${res}{/red-fg}`;
+      }
+      ctx.gui.put(out);
+    }
+  }
 };
 
 for (const [k, v] of Object.entries(module.exports)) {
