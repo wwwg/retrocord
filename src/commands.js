@@ -64,7 +64,7 @@ module.exports = {
         if (channel.recipients) {
           ctx.gui.put(`{bold}Joining the group conversation in "${channel.name}"{/bold}`);
         } else {
-          ctx.gui.put(`{bold}Joining DM with ${channel.recipient.tag}{/bold}`);
+          ctx.gui.put(`{bold}Loading DM with {white-fg}${channel.recipient.tag}{/white-fg}...{/bold}`);
         }
       } else {
         if (channel.nsfw && !(Storage.get('nsfw_store') || []).includes(scope.id)) {
@@ -73,7 +73,7 @@ module.exports = {
           if (!['yes', 'y'].includes(answer.toLowerCase())) return;
           Storage.set('nsfw_store', (Storage.get('nsfw_store') || []).concat(scope.id));
         }
-        ctx.gui.put(`{bold}Joining #${channel.name} in ${scope.name}{/bold}`);
+        ctx.gui.put(`{bold}Loading channel {white-fg}#${channel.name}{/white-fg} in {white-fg}${scope.name}{/white-fg}{/bold}...`);
       }
       channel.fetchMessages({
         limit: 25
