@@ -5,6 +5,7 @@ To install on Linux and Mac, make sure you have node and installed, and enter th
 ```sh
 curl https://raw.githubusercontent.com/wwwg/retrocord-light/master/nix-install.sh | bash
 ```
+After it's installed, you can launch Retrocord light by executing `retrocord-light` in a terminal.
 
 ## Features
 - Cool Commands
