@@ -2,7 +2,6 @@
 git clone https://github.com/wwwg/retrocord-light.git
 cd retrocord-light
 sudo npm -i -g i
-# Lint and build
-npm run lint
-npm run build
+# install
+npm run install-nix
 echo -n "\n\nInstalled Retrocord light. Run with 'npm start'\n"
