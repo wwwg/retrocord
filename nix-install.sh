@@ -1,7 +1,7 @@
 # Download and install required files
 git clone https://github.com/wwwg/retrocord-light.git
 cd retrocord-light
-npm -i -g i
+sudo npm -i -g i
 # Lint and build
 npm run lint
 npm run build
