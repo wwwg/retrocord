@@ -67,10 +67,10 @@ class GUI extends EventEmitter {
     return this.putMessages([message], opt);
   }
   putTypingStart(channel, user) {
-    me.put(`{yellow-fg}{bold}↪{/bold}{/yellow-fg} {white-fg}{bold}${user.username}{/bold} has {green-fg}started{/green-fg} typing.`);
+    this.put(`{yellow-fg}{bold}↪{/bold}{/yellow-fg} {white-fg}{bold}${user.username}{/bold} has {green-fg}started{/green-fg} typing.`);
   }
   putTypingStop(channel, user) {
-    me.put(`{yellow-fg}{bold}↪{/bold}{/yellow-fg} {white-fg}{bold}${user.username}{/bold} has {red-fg}stopped{/red-fg} typing.`);
+    this.put(`{yellow-fg}{bold}↪{/bold}{/yellow-fg} {white-fg}{bold}${user.username}{/bold} has {red-fg}stopped{/red-fg} typing.`);
   }
   awaitResponse(text) {
     this.awaitingResponse = true;
