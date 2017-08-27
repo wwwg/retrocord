@@ -1,6 +1,5 @@
 const EventEmitter = require('events');
 const blessed = require('blessed');
-const messageElement = require('./elements/Message');
 
 class GUI extends EventEmitter {
   constructor(screen) {
@@ -56,8 +55,6 @@ class GUI extends EventEmitter {
   }
   putMessages(messages) {
     const me = this;
-    //messages.map(messageElement)
-    var msgs = messages.map(messageElement);
     messages.forEach(m => {
       const txt = m.author.tag + ": " + m.content;
       me.put(txt);
