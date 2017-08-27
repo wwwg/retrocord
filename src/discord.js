@@ -11,7 +11,7 @@ client.run = ctx => {
     }
   });
   client.on('message', msg => {
-    if (ctx.current.channel && msg.channel.id ==- ctx.current.channel.id) {
+    if (ctx.current.channel && msg.channel.id === ctx.current.channel.id) {
       ctx.gui.putMessage(msg);
     }
   })
