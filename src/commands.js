@@ -85,6 +85,9 @@ module.exports = {
     },
   },
   dm: {
+    aliases: [
+      'd'
+    ],
     run: (ctx, args) => {
       var _args = [
         'dm',
