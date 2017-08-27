@@ -81,6 +81,8 @@ gui.on('input', (message) => {
       ctx.current.channel.send(message).catch((err) => {
         ctx.gui.put(`{bold}${err.message}{/bold}`);
       });
+    } else {
+      ctx.gui.put(`{yellow-fg}WARN:{/yellow-fg}: Failed to send message. Make sure you have joined a channel.`);
     }
   }
 });
