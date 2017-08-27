@@ -56,10 +56,11 @@ class GUI extends EventEmitter {
   }
   putMessages(messages) {
     const me = this;
-    Promise.all(messages.map(messageElement)).then(msgs => {
-      msgs.forEach(m => {
-        // me.consolebox.log(m);
-      });
+    //messages.map(messageElement)
+    var msgs = messages.map(messageElement);
+    messages.forEach(m => {
+      const txt = m.author.tag + ": " + m.content;
+      me.put(txt);
     });
   }
 
