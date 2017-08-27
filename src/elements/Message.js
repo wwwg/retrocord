@@ -9,7 +9,10 @@ function Message(message) {
     return blessed.element({
       children: [
         new Timestamp(message.createdAt),
-        new UserTag({ member: message.member, user: message.author }),
+        new UserTag({
+            member: message.member,
+            user: message.author
+          }),
         new MessageContent(message),
       ],
     });

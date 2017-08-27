@@ -16,12 +16,11 @@ function UserTag(props) {
       return '#FFFFFF';
     }
   })();
-
   return blessed.box({
     tags: true,
     style: {
       fg: color,
-      bold: props.bold,
+      bold: true,
     },
     content: user.tag,
   });
