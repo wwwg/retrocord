@@ -51,16 +51,16 @@ class GUI extends EventEmitter {
 
     this.inputbox.focus();
   }
-
   put(text) {
     this.consolebox.log(text);
   }
-
-  async putMessages(messages, { mdy = false } = {}) {
-    messages = await Promise.all(messages.map((m) => messageElement(m, mdy)));
-    for (var i = 0; i < messages.length; ++i) {
-      this.consolebox.log(messages[i]);
-    }
+  putMessages(messages) {
+    const me = this;
+    Promise.all(messages.map(messageElement)).then(msgs => {
+      msgs.forEach(m => {
+        // me.consolebox.log(m);
+      });
+    });
   }
 
   putMessage(message, opt) {

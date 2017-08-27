@@ -1,12 +1,12 @@
 const blessed = require('blessed');
 const timestamp = require('../util/timestamp');
 
-function Timestamp({ timestamp: t, mdy, style }) {
-  const date = typeof mdy !== 'undefined' ? mdy : new Date() - t > 86400000;
+function Timestamp(createdAt) {
+  const date = new Date();
   return blessed.box({
     tags: true,
     style,
-    content: timestamp(t, date),
+    content: timestamp(createdAt, date),
   });
 }
 
