@@ -5,8 +5,7 @@ function Timestamp(createdAt) {
   const date = new Date();
   return blessed.box({
     tags: true,
-    style,
-    content: timestamp(createdAt, date),
+    content: timestamp(createdAt, date)
   });
 }
 
