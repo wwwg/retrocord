@@ -8,7 +8,7 @@
     "build": "pkg ./package.json --out-path=./build",
     "full": "npm run lint && npm run build",
     "start": "node src/index.js",
-    "install-nix": "sudo bash install.sh"
+    "install-nix": "bash install.sh"
   },
   "repository": {
     "type": "git",
