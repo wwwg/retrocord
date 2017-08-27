@@ -6,7 +6,7 @@ client.run = ctx => {
     if (client.user.bot) {
       client.destroy();
     } else {
-      ctx.gui.put(`{green-fg}➜{/green-fg} Logged in as {bold}{yellow-fg}${client.user.tag}{/yellow-fg}{/bold}`);
+      ctx.gui.put(`{green-fg}➜{/green-fg} Logged in as {bold}{yellow-fg}${client.user.tag}{/yellow-fg} {green-fg}✓{/green-fg}{/bold}`);
       ctx.gui.put('{green-fg}➜{/green-fg} Use the join command to join a guild, dm, or channel (:join discord api #general)');
     }
   });
