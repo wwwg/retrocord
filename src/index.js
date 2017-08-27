@@ -89,22 +89,21 @@ gui.on('input', (message) => {
 
 gui.init();
 gui.put(`{center}Retrocord Light{/center}`, { center: true });
-gui.put('{bold}Welcome to Retrocord Light.{/bold}', { center: true });
+gui.put('{green-fg}➜{/green-fg} Welcome to {bold}Retrocord Light{/bold}.', { center: true });
 
 fs.stat(tokenFile, (err, stats) => {
   if (err) {
     // No token file in home dir
-    gui.put('Use :login <token> to login to your account.');
+    gui.put('{green-fg}➜{/green-fg} Use :login <token> to login to your account.');
   } else {
     // Auto login with found token file
-    gui.put("Reading cached token...");
     fs.readFile(tokenFile, 'utf8', (err, data) => {
       if (err) {
         throw err;
         return;
       } else {
         ctx.token = data;
-        gui.put("Got token. Logging in...");
+        gui.put("{green-fg}➜{/green-fg} Logging in...");
         ctx.discord.run(ctx);
       }
     });

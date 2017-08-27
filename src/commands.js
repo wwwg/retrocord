@@ -91,7 +91,7 @@ module.exports = {
     run: (ctx, args) => {
       var _args = [
         'dm',
-        ('@' + args[0])
+        ('@' + args.join(' '))
       ];
       module.exports.join.run(ctx, _args);
     }
