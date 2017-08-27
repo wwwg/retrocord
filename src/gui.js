@@ -1,5 +1,6 @@
-const EventEmitter = require('events');
-const blessed = require('blessed');
+const EventEmitter = require('events'),
+  blessed = require('blessed'),
+  timestamp = require('./util/timestamp');
 
 class GUI extends EventEmitter {
   constructor(screen) {
@@ -56,7 +57,8 @@ class GUI extends EventEmitter {
   putMessages(messages) {
     const me = this;
     messages.forEach(m => {
-      const txt = m.author.tag + ": " + m.content;
+      const ts = timestamp(m.createdAt),
+        txt = `{yellow-fg}{bold}${ts}{/bold}{/yellow-fg} {red-fg}${m.author.username}{/red-fg} : ${m.content}`;
       me.put(txt);
     });
   }
