@@ -160,7 +160,7 @@ class GUI extends EventEmitter {
     const me = this;
     messages.forEach(m => {
       const ts = timestamp(m.createdAt),
-        arrow = (m.author.id == ctx.discord.user.id) ? `{green-fg}{bold}>{/bold}{/green-fg}` : `{red-fg}{bold}<{/bold}{/red-fg}`,
+        arrow = (m.author.id == ctx.discord.user.id) ? `{green-fg}{bold}<{/bold}{/green-fg}` : `{red-fg}{bold}>{/bold}{/red-fg}`,
         txt = `${arrow} {yellow-fg}{bold}${ts}{/bold}{/yellow-fg} {white-fg}{bold}${m.author.username}{/bold}{/white-fg} ${m.content}`;
       me.put(txt);
     });
