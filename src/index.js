@@ -7,6 +7,7 @@ const emoji = require('node-emoji'),
   lookup = require('./util/lookup'),
   fs = require('fs'),
   home = require('./lib/home'),
+  feval = require('./lib/feval'),
   EventEmitter = require('events'),
   getEmojis = () => {
     if (ctx.discord.user && ctx.discord.user.premium) {
@@ -77,6 +78,15 @@ gui.on('input', (message) => {
     }
 
     if (ctx.current.channel) {
+      const reg = new RegExp(/\$\{(.*)\}/gi);
+      if (message.search(reg) != -1) {
+        const matches = reg.exec(message),
+          match = (matches[1] || null);
+          if (match) {
+            var res = feval(match);
+            message = message.replace(matches[0], res);
+          }
+      }
       ctx.current.channel.send(message).catch((err) => {
         ctx.gui.put(`{bold}${err.message}{/bold}`);
       });
