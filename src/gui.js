@@ -131,6 +131,15 @@ class GUI extends EventEmitter {
             me.inputbox.setValue(back);
         }
     });
+    this.inputbox.key('down', () => {
+        if (me.historyAt < 1) {
+            return; // History index too small
+        }
+        const forward = me.history[me.history.length - me.historyAt];
+        if (forward) {
+            me.inputbox.setValue(forward);
+        }
+    });
     this.screen.append(this.chatbox);
     this.screen.append(this.inputbox);
     this.screen.append(this.infobox);
