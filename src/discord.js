@@ -1,5 +1,5 @@
 const Discord = require('discord.js'),
-  client = new Discord.Client;
+  client = new Discord.Client();
 
 client.run = ctx => {
   client.on('ready', () => {

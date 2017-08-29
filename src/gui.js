@@ -79,13 +79,28 @@ class GUI extends EventEmitter {
     if (global.ctx && ctx.discord && ctx.discord.user) {
       const uname = ctx.discord.user.username,
         friendCount = ctx.discord.user.friends.array().length,
-        friends = ctx.discord.user.friends.array(),
-        isInDm = ctx.current.channel ? (ctx.current.channel instanceof Discord.DMChannel) : false;
+        friends = ctx.discord.user.friends,
+        isInDm = ctx.current.channel ? (ctx.current.channel instanceof Discord.DMChannel) : false,
+        listSize = friendCount > 24 ? 25 : friendCount;
       let txt = `
       {yellow-fg}{bold}${uname}{/bold}{/yellow-fg} / {white-fg}{bold}${friendCount}{/bold}{/white-fg}
       `;
       if (isInDm) {
         txt += `\n{center}DM: {white-fg}{bold}${ctx.current.channel.recipient.username}{/white-fg}{/bold}{/center}`;
+      }
+      if (!ctx.hideFriends) {
+        txt += "\nFriends:";
+        var fs = friends.array();
+        var chns = ctx.discord.channels.filterArray(c => c.type === 'dm');
+        // /*
+        chns.sort((a, b) => {
+          if (!a.recipient.lastMessage || !b.recipient.lastMessage) return -1;
+          return (b.recipient.lastMessage.createdTimestamp + a.recipient.lastMessage.createdTimestamp);
+        });
+        // */
+        for (var i = 0; i < listSize; ++i) {
+          txt += `\n{white-fg}{bold}-{/bold}{/white-fg} {yellow-fg}${chns[i].recipient.username}{/yellow-fg}`
+        }
       }
       this.infolog.setContent(txt);
     } else {

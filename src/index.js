@@ -29,6 +29,7 @@ class Context extends EventEmitter {
     this.gui = gui;
     this.discord = require('./discord');
     this.allowInput = true;
+    this.hideFriends = true; // Temporarly disabled
     this.current = {
       scope: null,
       channel: null,
