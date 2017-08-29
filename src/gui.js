@@ -113,6 +113,7 @@ class GUI extends EventEmitter {
     }
   }
   init() {
+    const me = this;
     this.inputbox.key('enter', () => {
       if (this.awaitingResponse) this.emit('internalInput', this.inputbox.getValue());
       else this.emit('input', this.inputbox.getValue());
@@ -122,16 +123,15 @@ class GUI extends EventEmitter {
         this.history.push(this.inputbox.getValue());
     });
     this.inputbox.key('up', () => {
-        const back = this.history[this.history.length - 1];
+        const back = me.history[me.history.length - 1];
         if (back)
-            this.inputbox.setValue(back);
+            me.inputbox.setValue(back);
     });
     this.screen.append(this.chatbox);
     this.screen.append(this.inputbox);
     this.screen.append(this.infobox);
     this.screen.render();
     this.inputbox.focus();
-    var me = this;
     me.renderInfo.call(me);
     setInterval(() => {
       me.renderInfo.call(me);
