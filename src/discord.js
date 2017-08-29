@@ -17,10 +17,12 @@ client.run = ctx => {
   }).on('typingStart', (channel, user) => {
     if (ctx.current.channel && channel.id === ctx.current.channel.id) {
       ctx.gui.putTypingStart(channel, user);
+      ctx.dmIsTyping = true;
     }
   }).on('typingStop', (channel, user) => {
     if (ctx.current.channel && channel.id === ctx.current.channel.id) {
       ctx.gui.putTypingStop(channel, user);
+      ctx.dmIsTyping = false;
     }
   });
   client.login(ctx.token)

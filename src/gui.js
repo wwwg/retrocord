@@ -77,16 +77,19 @@ class GUI extends EventEmitter {
   }
   renderInfo() {
     if (global.ctx && ctx.discord && ctx.discord.user) {
-      const uname = ctx.discord.user.username,
+      const uname = ctx.discord.user.tag,
         friendCount = ctx.discord.user.friends.array().length,
         friends = ctx.discord.user.friends,
         isInDm = ctx.current.channel ? (ctx.current.channel instanceof Discord.DMChannel) : false,
         listSize = friendCount > 24 ? 25 : friendCount;
       let txt = `
-      {yellow-fg}{bold}${uname}{/bold}{/yellow-fg} / {white-fg}{bold}${friendCount}{/bold}{/white-fg}
+      {yellow-fg}{bold}${uname}{/bold}{/yellow-fg}
       `;
       if (isInDm) {
-        txt += `\n{center}DM: {white-fg}{bold}${ctx.current.channel.recipient.username}{/white-fg}{/bold}{/center}`;
+        txt += `\n{center}DM:\n{white-fg}{bold}${ctx.current.channel.recipient.username}{/white-fg}{/bold}{/center}`;
+        if (ctx.dmIsTyping) {
+          txt += `\n{center}{underline}{white-fg}is typing...{/white-fg}{/underline}{/center}`;
+        }
       }
       if (!ctx.hideFriends) {
         txt += "\nFriends:";

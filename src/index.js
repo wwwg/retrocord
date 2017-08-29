@@ -30,6 +30,7 @@ class Context extends EventEmitter {
     this.discord = require('./discord');
     this.allowInput = true;
     this.hideFriends = true; // Temporarly disabled
+    this.dmIsTyping = false;
     this.current = {
       scope: null,
       channel: null,
