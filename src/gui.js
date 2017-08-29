@@ -1,6 +1,7 @@
 const EventEmitter = require('events'),
   blessed = require('blessed'),
-  timestamp = require('./util/timestamp');
+  timestamp = require('./util/timestamp'),
+  Discord = require('discord.js');
 
 class GUI extends EventEmitter {
   constructor(screen) {
@@ -74,7 +75,23 @@ class GUI extends EventEmitter {
     });
     this.awaitingResponse = false;
   }
-
+  renderInfo() {
+    if (global.ctx && ctx.discord && ctx.discord.user) {
+      const uname = ctx.discord.user.username,
+        friendCount = ctx.discord.user.friends.array().length,
+        friends = ctx.discord.user.friends.array(),
+        isInDm = ctx.current.channel ? (ctx.current.channel instanceof Discord.DMChannel) : false;
+      let txt = `
+      {yellow-fg}{bold}${uname}{/bold}{/yellow-fg} / {white-fg}{bold}${friendCount}{/bold}{/white-fg}
+      `;
+      if (isInDm) {
+        txt += `\n{center}DM: {white-fg}{bold}${ctx.current.channel.recipient.username}{/white-fg}{/bold}{/center}`;
+      }
+      this.infolog.setContent(txt);
+    } else {
+      this.infolog.setContent('Not logged in :(');
+    }
+  }
   init() {
     this.inputbox.key('enter', () => {
       if (this.awaitingResponse) this.emit('internalInput', this.inputbox.getValue());
@@ -88,6 +105,11 @@ class GUI extends EventEmitter {
     this.screen.append(this.infobox);
     this.screen.render();
     this.inputbox.focus();
+    var me = this;
+    me.renderInfo.call(me);
+    setInterval(() => {
+      me.renderInfo.call(me);
+    }, 1000);
   }
   put(text) {
     this.consolebox.log(text);
