@@ -99,13 +99,13 @@ gui.on('input', (message) => {
 });
 
 gui.init();
-gui.put(`{center}Retrocord Light{/center}`, { center: true });
-gui.put('{green-fg}➜{/green-fg} Welcome to {bold}Retrocord Light{/bold}.', { center: true });
+// gui.put(`{center}Retrocord Light{/center}`, { center: true });
+// gui.put('{green-fg}➜{/green-fg} Welcome to {bold}Retrocord Light{/bold}.', { center: true });
 
 fs.stat(tokenFile, (err, stats) => {
   if (err) {
     // No token file in home dir
-    gui.put('{green-fg}➜{/green-fg} Use :login <token> to login to your account.');
+    gui.put('{green-fg}>{/green-fg} Use :login <token> to login to your account.');
   } else {
     // Auto login with found token file
     fs.readFile(tokenFile, 'utf8', (err, data) => {
@@ -114,7 +114,7 @@ fs.stat(tokenFile, (err, stats) => {
         return;
       } else {
         ctx.token = data;
-        gui.put("{green-fg}➜{/green-fg} Logging in...");
+        // gui.put("{green-fg}➜{/green-fg} Logging in...");
         ctx.discord.run(ctx);
       }
     });

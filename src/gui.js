@@ -110,7 +110,7 @@ class GUI extends EventEmitter {
       }
       this.infolog.setContent(txt);
     } else {
-      this.infolog.setContent('Not logged in :(');
+      this.infolog.setContent('Not logged in :(.');
     }
   }
   init() {
@@ -169,10 +169,10 @@ class GUI extends EventEmitter {
     return this.putMessages([message], opt);
   }
   putTypingStart(channel, user) {
-    this.put(`{blue-fg}{bold}↷{/bold}{/blue-fg} {white-fg}{bold}${user.username}{/bold}{/white-fg} has {green-fg}started{/green-fg} typing.`);
+    // athis.put(`{blue-fg}{bold}↷{/bold}{/blue-fg} {white-fg}{bold}${user.username}{/bold}{/white-fg} has {green-fg}started{/green-fg} typing.`);
   }
   putTypingStop(channel, user) {
-    this.put(`{blue-fg}{bold}↶{/bold}{/blue-fg} {white-fg}{bold}${user.username}{/bold}{/white-fg} has {red-fg}stopped{/red-fg} typing.`);
+    // this.put(`{blue-fg}{bold}↶{/bold}{/blue-fg} {white-fg}{bold}${user.username}{/bold}{/white-fg} has {red-fg}stopped{/red-fg} typing.`);
   }
   awaitResponse(text) {
     this.awaitingResponse = true;
