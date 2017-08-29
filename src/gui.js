@@ -90,7 +90,7 @@ class GUI extends EventEmitter {
         if (ctx.dmIsTyping) {
           txt += `\n{center}{underline}{white-fg}is typing...{/white-fg}{/underline}{/center}`;
         }
-        txt += `\n{center}Status: {bold}${ctx.current.channel.recipient.presence.status}{/bold}{/center}`;
+        txt += `\n{underline}Status: {bold}${ctx.current.channel.recipient.presence.status}{/underline}{/center}\n`;
       }
       if (!ctx.hideFriends) {
         txt += "\nFriends:";
