@@ -123,7 +123,8 @@ class GUI extends EventEmitter {
     });
     this.inputbox.key('up', () => {
         const back = this.history[this.history.length - 1];
-        this.inputbox.setValue(back);
+        if (back)
+            this.inputbox.setValue(back);
     });
     this.screen.append(this.chatbox);
     this.screen.append(this.inputbox);
