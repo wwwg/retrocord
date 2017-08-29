@@ -103,7 +103,7 @@ class GUI extends EventEmitter {
         });
         // */
         for (var i = 0; i < listSize; ++i) {
-          txt += `\n{white-fg}{bold}-{/bold}{/white-fg} {yellow-fg}${chns[i].recipient.username}{/yellow-fg}`
+          txt += `\n{white-fg}{bold}-{/bold}{/white-fg} {yellow-fg}${chns[i].recipient.tag}{/yellow-fg}`
         }
       }
       this.infolog.setContent(txt);
