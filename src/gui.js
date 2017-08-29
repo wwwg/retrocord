@@ -7,6 +7,7 @@ class GUI extends EventEmitter {
   constructor(screen) {
     super();
     this.history = []; // For storing past messages
+    this.historyAt = 1; // For indexing history
     this.screen = screen;
     this.chatbox = blessed.box({
       label: 'Retrocord Light',
@@ -117,15 +118,18 @@ class GUI extends EventEmitter {
     this.inputbox.key('enter', () => {
       if (this.awaitingResponse) this.emit('internalInput', this.inputbox.getValue());
       else this.emit('input', this.inputbox.getValue());
+        this.history.push(this.inputbox.getValue());
       this.inputbox.clearValue();
       this.inputbox.focus();
       this.screen.render();
-        this.history.push(this.inputbox.getValue());
+        this.historyAt = 1; // Reset history index after message sent
     });
     this.inputbox.key('up', () => {
-        const back = me.history[me.history.length - 1];
-        if (back)
+        const back = me.history[me.history.length - me.historyAt];
+        me.historyAt++;
+        if (back) {
             me.inputbox.setValue(back);
+        }
     });
     this.screen.append(this.chatbox);
     this.screen.append(this.inputbox);
