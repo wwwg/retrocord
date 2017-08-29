@@ -135,7 +135,7 @@ class GUI extends EventEmitter {
     me.renderInfo.call(me);
     setInterval(() => {
       me.renderInfo.call(me);
-    }, 1000);
+    }, 750);
   }
   put(text) {
     this.consolebox.log(text);
