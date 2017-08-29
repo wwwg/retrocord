@@ -87,10 +87,10 @@ class GUI extends EventEmitter {
       `;
       if (isInDm) {
         txt += `\n{center}DM:\n{white-fg}{bold}${ctx.current.channel.recipient.username}{/white-fg}{/bold}{/center}`;
-        txt += `\n{center}Status: {white-fg}{bold}${ctx.current.channel.recipient.presence.status}{/white-fg}{/bold}{/center}`;
         if (ctx.dmIsTyping) {
           txt += `\n{center}{underline}{white-fg}is typing...{/white-fg}{/underline}{/center}`;
         }
+        txt += `\n{center}Status: {bold}${ctx.current.channel.recipient.precense.status}{/bold}{/center}`;
       }
       if (!ctx.hideFriends) {
         txt += "\nFriends:";
