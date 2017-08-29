@@ -8,11 +8,32 @@ class GUI extends EventEmitter {
     this.screen = screen;
     this.chatbox = blessed.box({
       label: 'Retrocord Light',
-      width: '100%',
-      height: '100%-1',
-      border: { type: 'line' },
+      left: '0.5%',
+      width: '86%',
+      height: '96%-1',
+      border: {
+        type: 'line'
+      },
+      style: {
+        border: {
+          fg: 'white'
+        }
+      }
     });
-
+    this.infobox = blessed.textbox({
+      label: 'Info',
+      left: '86%',
+      width: '14%',
+      height: '96%-1',
+      border: {
+        type: "line"
+      },
+      style: {
+        border: {
+          fg: "white"
+        }
+      }
+    });
     this.consolebox = blessed.log({
       parent: this.chatbox,
       tags: true,
@@ -23,16 +44,34 @@ class GUI extends EventEmitter {
         ch: '',
         inverse: true,
       },
-      mouse: true,
+      mouse: true
     });
-
     this.inputbox = blessed.textbox({
       bottom: 0,
       width: '100%',
-      height: 1,
+      height: 3,
       inputOnFocus: true,
+      border: {
+        type: 'line'
+      },
+      style: {
+        border: {
+          fg: 'grey'
+        }
+      }
     });
-
+    this.infolog = blessed.log({
+      parent: this.infobox,
+      tags: true,
+      scrollable: true,
+      label: '',
+      alwaysScroll: true,
+      scrollbar: {
+        ch: '',
+        inverse: true,
+      },
+      mouse: true
+    });
     this.awaitingResponse = false;
   }
 
@@ -44,15 +83,17 @@ class GUI extends EventEmitter {
       this.inputbox.focus();
       this.screen.render();
     });
-
     this.screen.append(this.chatbox);
     this.screen.append(this.inputbox);
+    this.screen.append(this.infobox);
     this.screen.render();
-
     this.inputbox.focus();
   }
   put(text) {
     this.consolebox.log(text);
+  }
+  puti(txt) {
+    this.infolog.log(txt);
   }
   putMessages(messages) {
     const me = this;
