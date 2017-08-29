@@ -6,6 +6,7 @@ const EventEmitter = require('events'),
 class GUI extends EventEmitter {
   constructor(screen) {
     super();
+    this.history = []; // For storing past messages
     this.screen = screen;
     this.chatbox = blessed.box({
       label: 'Retrocord Light',
@@ -118,6 +119,11 @@ class GUI extends EventEmitter {
       this.inputbox.clearValue();
       this.inputbox.focus();
       this.screen.render();
+        this.history.push(this.inputbox.getValue());
+    });
+    this.inputbox.key('up', () => {
+        const back = this.history[this.history.length - 1];
+        this.inputbox.setValue(back);
     });
     this.screen.append(this.chatbox);
     this.screen.append(this.inputbox);
