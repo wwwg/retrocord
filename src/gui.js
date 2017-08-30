@@ -78,6 +78,9 @@ class GUI extends EventEmitter {
     this.awaitingResponse = false;
   }
   renderInfo() {
+    if (global.ctx && ctx.zen) {
+        return; // Zen mode doesnt use the info box
+    }
     if (global.ctx && ctx.discord && ctx.discord.user) {
       const uname = ctx.discord.user.tag,
         friendCount = ctx.discord.user.friends.array().length,

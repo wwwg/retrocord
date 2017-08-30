@@ -3,6 +3,15 @@ const lookup = require('./util/lookup'),
   home = require('./lib/home');
 
 module.exports = {
+    zen: {
+        aliases: [
+            'z'
+        ],
+        run: (ctx, args) => {
+            ctx.zen = !ctx.zen;
+            ctx.gui.infobox.toggle();
+        }
+    }
   q: {
     aliases: ['quit',
       'exit',
