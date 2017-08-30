@@ -11,7 +11,7 @@ module.exports = {
             ctx.zen = !ctx.zen;
             ctx.gui.infobox.toggle();
         }
-    }
+    },
   q: {
     aliases: ['quit',
       'exit',
