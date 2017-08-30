@@ -29,6 +29,7 @@ class Context extends EventEmitter {
     this.gui = gui;
     this.discord = require('./discord');
     this.allowInput = true;
+    this.zen = false; // Zen mode
     this.hideFriends = true; // Temporarly disabled
     this.dmIsTyping = false;
     this.current = {
