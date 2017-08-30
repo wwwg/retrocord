@@ -128,7 +128,7 @@ class GUI extends EventEmitter {
         const back = me.history[me.history.length - me.historyAt];
         me.historyAt++;
         if (back) {
-            me.inputbox.setValue(back);
+            // me.inputbox.setValue(back);
         }
     });
     this.inputbox.key('down', () => {
@@ -137,7 +137,7 @@ class GUI extends EventEmitter {
         }
         const forward = me.history[me.history.length - me.historyAt];
         if (forward) {
-            me.inputbox.setValue(forward);
+            // me.inputbox.setValue(forward);
         }
     });
     this.screen.append(this.chatbox);
