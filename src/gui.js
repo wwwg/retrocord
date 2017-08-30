@@ -160,12 +160,12 @@ class GUI extends EventEmitter {
     this.infolog.log(txt);
   }
   putMessages(messages) {
+    const me = this;
     if (ctx.zen) {
         messages.forEach(m => {
             me.put(`${m.author.username} : ${m.content}`);
         });
     } else {
-        const me = this;
         messages.forEach(m => {
         const ts = timestamp(m.createdAt),
             arrow = (m.author.id == ctx.discord.user.id) ? `{green-fg}{bold}<{/bold}{/green-fg}` : `{red-fg}{bold}>{/bold}{/red-fg}`,
