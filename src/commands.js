@@ -133,6 +133,12 @@ module.exports = {
         });
     },
   },
+    ui: {
+        aliases: ['u'],
+        run: (ctx, args) => {
+            ctx.gui.infobox.toggle();
+        }
+    },
   set: {
     run: (ctx, [name, value]) => {
       if (ctx.rc.set(name, value)) ctx.gui.put(`{bold}Changed setting "${name}" to "${value}"{/bold}`);
